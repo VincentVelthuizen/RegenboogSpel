@@ -71,6 +71,17 @@ html, body {
   50%      { stroke: var(--target-color, #888); }
 }
 
+.arc.blink-once {
+  animation: arc-blink 500ms ease-in-out;
+}
+
+@keyframes arc-blink {
+  0%   { stroke-opacity: 1; }
+  /*25%  { stroke-opacity: 0.1; }*/
+  50%  { stroke-opacity: 0.1; }
+  100% { stroke-opacity: 1; }
+}
+
 /* Emoji-knoppen */
 
 .emoji-btn {

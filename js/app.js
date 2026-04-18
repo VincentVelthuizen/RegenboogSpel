@@ -4,7 +4,7 @@ import {
   recordWrong,
   restart,
 } from './game/state.js';
-import { updateRainbow } from './ui/rainbow.js';
+import { updateRainbow, flashFilledArcs } from './ui/rainbow.js';
 import {
   renderChoices,
   bindChoices,
@@ -48,16 +48,22 @@ function handleCorrect(buttonEl) {
 
   window.setTimeout(() => {
     state = recordCorrect(state);
-    state = { ...state, tapsAreLocked: false };
 
-    if (state.phase === 'celebrating') {
-      updateRainbow(state);
-      renderChoices(state);
-      updateHint(state);
-      showCelebration();
-    } else {
-      renderAll();
-    }
+    // Fill the new arc but suppress the next target pulse until after the flash
+    updateRainbow({ ...state, phase: 'celebrating' });
+    flashFilledArcs(state.filledColors);
+
+    const cascadeDuration = (state.filledColors.length - 1) * 250 + 500;
+    window.setTimeout(() => {
+      state = { ...state, tapsAreLocked: false };
+      if (state.phase === 'celebrating') {
+        renderChoices(state);
+        updateHint(state);
+        showCelebration();
+      } else {
+        renderAll();
+      }
+    }, cascadeDuration);
   }, 500);
 }
 
