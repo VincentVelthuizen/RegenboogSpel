@@ -1,0 +1,157 @@
+#dots-game {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#picker {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(26vw, 1fr));
+  gap: 4vw;
+  align-content: center;
+  justify-items: center;
+  padding: 4vw;
+}
+
+#board {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+}
+
+/* Level-select cards + the "back" tile reuse the .emoji-btn look. */
+.level-btn svg,
+.back-btn svg {
+  pointer-events: none;
+}
+
+.level-icon {
+  width: 72%;
+  height: 72%;
+}
+
+.level-icon-line {
+  fill: none;
+  stroke: #cdcdcd;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.level-icon-dot {
+  fill: #f1c40f;
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+
+.back-icon {
+  width: 48%;
+  height: 48%;
+  fill: none;
+  stroke: #888;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dot-hit {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.dot {
+  fill: #fff;
+  stroke: #bbb;
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.dot.done {
+  stroke: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.5);
+}
+
+/* The dot just connected collapses down from full size to the small dot. */
+.dot.done.collapsing {
+  animation: dot-collapse 300ms ease forwards;
+}
+
+@keyframes dot-collapse {
+  0%   { transform: scale(1.55); }
+  55%  { transform: scale(0.4); }
+  100% { transform: scale(0.5); }
+}
+
+.dot.next {
+  stroke: var(--dot-color, #888);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dot-pulse 1s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.55); }
+}
+
+.dot-num {
+  font-size: 6px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: #444;
+  pointer-events: none;
+  font-family: system-ui, sans-serif;
+}
+
+.dot-line {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dot-fill {
+  fill-opacity: 0;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  animation: dot-fill-in 600ms ease forwards;
+}
+
+@keyframes dot-fill-in {
+  to { fill-opacity: 0.22; }
+}
+
+.dot-emoji {
+  font-size: 34px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dot-emoji-pop 650ms ease forwards;
+}
+
+@keyframes dot-emoji-pop {
+  0%   { transform: scale(0);    opacity: 0; }
+  60%  { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+#dots-celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+#dots-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}

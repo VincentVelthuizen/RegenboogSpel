@@ -45,6 +45,42 @@ html, body {
   display: none !important;
 }
 
+/* Home / switch-game button (top-left of each game page) */
+
+.home-btn {
+  position: fixed;
+  top: 2vh;
+  left: 2vw;
+  width: clamp(44px, 9vw, 64px);
+  height: clamp(44px, 9vw, 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 30%;
+  box-shadow: 0 3px 0 #d0d0d0;
+  color: #888;
+  text-decoration: none;
+  z-index: 5;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.home-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #d0d0d0;
+}
+
+.home-btn svg {
+  width: 58%;
+  height: 58%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* Regenboog */
 
 .arc {

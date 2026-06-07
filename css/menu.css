@@ -1,0 +1,44 @@
+#menu {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6vw;
+  padding: 4vw;
+}
+
+.menu-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(120px, 36vw, 280px);
+  height: clamp(120px, 36vw, 280px);
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 20%;
+  box-shadow: 0 4px 0 #d0d0d0;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.menu-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #d0d0d0;
+}
+
+.menu-card__emoji {
+  font-size: clamp(4rem, 20vw, 9rem);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-card__svg {
+  width: clamp(4rem, 20vw, 9rem);
+  height: clamp(4rem, 20vw, 9rem);
+}
