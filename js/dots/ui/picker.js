@@ -1,3 +1,5 @@
+import { STAR_LEVEL } from '../game/constellations.js';
+
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 // A small dot-to-dot icon hinting at difficulty: more dots = harder level.
@@ -31,6 +33,31 @@ function levelIcon(level) {
   return svg;
 }
 
+// The "✨" star level: a little constellation of connected stars.
+function starLevelIcon() {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 100 100');
+  svg.setAttribute('class', 'level-icon star-level-icon');
+
+  const pts = [[20, 30], [44, 22], [56, 52], [80, 40], [70, 72]];
+
+  const line = document.createElementNS(SVG_NS, 'polyline');
+  line.setAttribute('class', 'level-icon-line star-icon-line');
+  line.setAttribute('points', pts.map((p) => p.join(',')).join(' '));
+  svg.appendChild(line);
+
+  pts.forEach(([x, y]) => {
+    const dot = document.createElementNS(SVG_NS, 'circle');
+    dot.setAttribute('class', 'level-icon-dot star-icon-dot');
+    dot.setAttribute('cx', String(x));
+    dot.setAttribute('cy', String(y));
+    dot.setAttribute('r', '6');
+    svg.appendChild(dot);
+  });
+
+  return svg;
+}
+
 function backButton(onBack) {
   const btn = document.createElement('button');
   btn.className = 'emoji-btn back-btn';
@@ -52,11 +79,12 @@ export function renderLevelSelect(levels, onSelectLevel) {
   container.innerHTML = '';
 
   levels.forEach((level) => {
+    const isStar = level === STAR_LEVEL;
     const btn = document.createElement('button');
-    btn.className = 'emoji-btn level-btn';
+    btn.className = isStar ? 'emoji-btn level-btn star-level' : 'emoji-btn level-btn';
     btn.type = 'button';
-    btn.setAttribute('aria-label', `niveau ${level}`);
-    btn.appendChild(levelIcon(level));
+    btn.setAttribute('aria-label', isStar ? 'sterrenbeelden' : `niveau ${level}`);
+    btn.appendChild(isStar ? starLevelIcon() : levelIcon(level));
     btn.addEventListener('click', () => onSelectLevel(level));
     container.appendChild(btn);
   });

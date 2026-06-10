@@ -112,3 +112,35 @@ export function revealPicture(puzzle) {
   // so the connect-the-dots picture stays visible in front of it.
   board.insertBefore(text, polygon.nextSibling);
 }
+
+// Reveal for a finished constellation: no polygon fill (the figure is an open
+// path). Instead, fade in the star-atlas figure behind the lines and show the
+// constellation's name, like an old celestial chart.
+export function revealConstellation(figure) {
+  const board = document.getElementById('board');
+  const { dots, emoji, label } = figure;
+
+  // Faint figure drawn over the stars, centred on the dots' bounding box.
+  const xs = dots.map(([x]) => x);
+  const ys = dots.map(([, y]) => y);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const size = Math.min(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) * 1.4;
+
+  const figureText = document.createElementNS(SVG_NS, 'text');
+  figureText.setAttribute('class', 'constellation-figure');
+  figureText.setAttribute('x', String(cx));
+  figureText.setAttribute('y', String(cy));
+  figureText.style.fontSize = `${size}px`;
+  figureText.textContent = emoji;
+  // Behind the lines and stars so the connected pattern stays in front.
+  board.insertBefore(figureText, board.firstChild);
+
+  // Name banner along the top of the chart.
+  const name = document.createElementNS(SVG_NS, 'text');
+  name.setAttribute('class', 'constellation-name');
+  name.setAttribute('x', '50');
+  name.setAttribute('y', '9');
+  name.textContent = label;
+  board.appendChild(name);
+}
