@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     rainbow: './js/app.js',
     dots: './js/dots/app.js',
+    yahtzee: './js/yahtzee/app.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -29,6 +30,12 @@ module.exports = {
       template: './stippen.html',
       filename: 'stippen.html',
       chunks: ['dots'],
+    }),
+    // Yahtzee.
+    new HtmlWebpackPlugin({
+      template: './yahtzee.html',
+      filename: 'yahtzee.html',
+      chunks: ['yahtzee'],
     }),
   ],
 };

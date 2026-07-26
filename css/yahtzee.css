@@ -1,0 +1,375 @@
+#yahtzee-game {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.yz-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  padding: 8vh 4vw 3vh;
+  gap: 3vh;
+}
+
+.yz-title {
+  font-size: clamp(1.3rem, 5vw, 2rem);
+  text-align: center;
+  color: #444;
+}
+
+/* ===================== Menu (variant/mode picker) ===================== */
+
+#yz-menu {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 5vw;
+}
+
+.yz-menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1vh;
+  width: clamp(140px, 30vw, 220px);
+  height: clamp(140px, 30vw, 220px);
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 12%;
+  box-shadow: 0 4px 0 #d0d0d0;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  padding: 3vw;
+}
+
+.yz-menu-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #d0d0d0;
+}
+
+.yz-menu-emoji {
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  line-height: 1;
+}
+
+.yz-menu-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.yz-menu-sub {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+}
+
+/* ===================== Player setup ===================== */
+
+.yz-player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  width: min(90vw, 360px);
+}
+
+.yz-player-row {
+  display: flex;
+  gap: 2vw;
+  align-items: center;
+}
+
+.yz-player-input {
+  flex: 1 1 auto;
+  font-size: 1.1rem;
+  padding: 1.2vh 3vw;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  min-width: 0;
+}
+
+.yz-remove-player-btn {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  background: #fff;
+  color: #c0392b;
+  font-size: 1rem;
+  box-shadow: 0 3px 0 #d0d0d0;
+}
+
+.yz-remove-player-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #d0d0d0;
+}
+
+.yz-add-player-btn,
+.yz-start-btn {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1.5vh 6vw;
+  border: 2px solid #ddd;
+  border-radius: 16px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 4px 0 #d0d0d0;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.yz-add-player-btn:active,
+.yz-start-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #d0d0d0;
+}
+
+.yz-start-btn {
+  background: #2ecc71;
+  color: #fff;
+  border-color: #27ae60;
+  box-shadow: 0 4px 0 #229954;
+}
+
+/* ===================== Dice ===================== */
+
+#yz-playing {
+  padding: 6vh 4vw 2vh;
+  gap: 2vh;
+  height: 100%;
+}
+
+.yz-dice-row {
+  display: flex;
+  gap: 3vw;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.yz-die,
+.yz-die-manual {
+  width: clamp(48px, 13vw, 76px);
+  height: clamp(48px, 13vw, 76px);
+  border-radius: 20%;
+}
+
+.yz-die {
+  background: #fff;
+  border: 2px solid #ddd;
+  box-shadow: 0 4px 0 #d0d0d0;
+  padding: 0;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.yz-die:not(:disabled):active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #d0d0d0;
+}
+
+.yz-die:disabled {
+  opacity: 0.85;
+}
+
+.yz-die-held {
+  background: #fef4d6;
+  border-color: #f1c40f;
+  box-shadow: 0 4px 0 #e0b30c;
+}
+
+.yz-die-face {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: 14%;
+}
+
+.yz-die-empty {
+  opacity: 0;
+}
+
+.yz-pip {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #444;
+  align-self: center;
+  justify-self: center;
+}
+
+.yz-pip-tl { grid-area: 1 / 1; }
+.yz-pip-tc { grid-area: 1 / 2; }
+.yz-pip-tr { grid-area: 1 / 3; }
+.yz-pip-ml { grid-area: 2 / 1; }
+.yz-pip-mc { grid-area: 2 / 2; }
+.yz-pip-mr { grid-area: 2 / 3; }
+.yz-pip-bl { grid-area: 3 / 1; }
+.yz-pip-bc { grid-area: 3 / 2; }
+.yz-pip-br { grid-area: 3 / 3; }
+
+.yz-roll-btn {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1.5vh 6vw;
+  border: 2px solid #2980b9;
+  border-radius: 16px;
+  background: #3498db;
+  color: #fff;
+  box-shadow: 0 4px 0 #21618c;
+  align-self: center;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.yz-roll-btn:not(:disabled):active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #21618c;
+}
+
+.yz-roll-btn:disabled {
+  background: #bbb;
+  border-color: #999;
+  box-shadow: 0 4px 0 #888;
+}
+
+.yz-hint {
+  text-align: center;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.yz-die-manual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+  background: transparent;
+  height: auto;
+}
+
+.yz-die-manual .yz-die-face {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 20%;
+  box-shadow: 0 4px 0 #d0d0d0;
+}
+
+.yz-manual-picker {
+  display: flex;
+  gap: 2px;
+}
+
+.yz-manual-value-btn {
+  width: 22px;
+  height: 22px;
+  font-size: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  color: #666;
+}
+
+.yz-manual-value-btn.yz-selected {
+  background: #3498db;
+  border-color: #2980b9;
+  color: #fff;
+}
+
+/* ===================== Scorecard ===================== */
+
+#yz-scorecard {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.yz-scorecard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(0.75rem, 2.6vw, 1rem);
+}
+
+.yz-scorecard-table th,
+.yz-scorecard-table td {
+  padding: 1vh 2vw;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+
+.yz-scorecard-table thead th {
+  color: #555;
+  font-weight: 600;
+}
+
+.yz-scorecard-table tbody th {
+  text-align: left;
+  font-weight: 400;
+  color: #444;
+}
+
+.yz-scorecard-table .yz-current {
+  background: #eaf6ff;
+}
+
+.yz-scorecard-table thead th.yz-current {
+  color: #2980b9;
+}
+
+.yz-bonus-row th,
+.yz-bonus-row td {
+  color: #888;
+  font-style: italic;
+}
+
+.yz-scorecard-table tfoot th,
+.yz-scorecard-table tfoot td {
+  font-weight: 700;
+  border-top: 2px solid #ccc;
+  border-bottom: none;
+}
+
+.yz-score-btn {
+  min-width: 2.4em;
+  padding: 0.6vh 2vw;
+  border: 1.5px solid #b8e0c5;
+  border-radius: 10px;
+  background: #eafaf0;
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.yz-score-btn:disabled {
+  opacity: 0.5;
+  color: #999;
+  background: #f2f2f2;
+  border-color: #ddd;
+}
+
+.yz-filled {
+  color: #333;
+}
+
+/* ===================== Game over ===================== */
+
+.yz-ranking {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.yz-ranking li:first-child {
+  font-weight: 700;
+  color: #d4a017;
+  font-size: 1.4rem;
+}
