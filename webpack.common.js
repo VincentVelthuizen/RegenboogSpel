@@ -6,6 +6,8 @@ module.exports = {
     rainbow: './js/app.js',
     dots: './js/dots/app.js',
     yahtzee: './js/yahtzee/app.js',
+    sudoku: './js/sudoku/app.js',
+    woordzoeker: './js/woordzoeker/app.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -36,6 +38,18 @@ module.exports = {
       template: './yahtzee.html',
       filename: 'yahtzee.html',
       chunks: ['yahtzee'],
+    }),
+    // Sudoku.
+    new HtmlWebpackPlugin({
+      template: './sudoku.html',
+      filename: 'sudoku.html',
+      chunks: ['sudoku'],
+    }),
+    // Woordzoeker.
+    new HtmlWebpackPlugin({
+      template: './woordzoeker.html',
+      filename: 'woordzoeker.html',
+      chunks: ['woordzoeker'],
     }),
   ],
 };

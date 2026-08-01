@@ -3,10 +3,12 @@
   height: 100vh;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 6vw;
   padding: 4vw;
+  overflow-y: auto;
 }
 
 .menu-card {

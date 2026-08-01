@@ -1,0 +1,256 @@
+#wz-game {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wz-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+
+/* ===================== Mode / theme menus ===================== */
+
+#wz-mode {
+  justify-content: center;
+  gap: 5vw;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 4vw;
+}
+
+#wz-theme {
+  justify-content: flex-start;
+  padding: 8vh 4vw 4vh;
+  gap: 3vh;
+}
+
+.wz-back-btn {
+  align-self: flex-start;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 1.2vh 3vw;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 3px 0 #d0d0d0;
+}
+
+.wz-back-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #d0d0d0;
+}
+
+.wz-menu-row {
+  display: flex;
+  gap: 4vw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wz-menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1vh;
+  width: clamp(140px, 30vw, 220px);
+  height: clamp(140px, 30vw, 220px);
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 12%;
+  box-shadow: 0 4px 0 #d0d0d0;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  padding: 3vw;
+}
+
+.wz-menu-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #d0d0d0;
+}
+
+.wz-menu-emoji {
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  line-height: 1;
+}
+
+.wz-menu-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.wz-menu-sub {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+}
+
+/* ===================== Toolbar ===================== */
+
+#wz-toolbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2vh 4vw 1vh;
+  flex: 0 0 auto;
+}
+
+.wz-toolbar-btn {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 1.2vh 3vw;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 3px 0 #d0d0d0;
+}
+
+.wz-toolbar-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #d0d0d0;
+}
+
+/* ===================== Word list ===================== */
+
+#wz-wordlist {
+  flex: 0 0 auto;
+  width: 100%;
+  padding: 0 4vw 1vh;
+}
+
+.wz-word-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5vw 4vw;
+  justify-content: center;
+}
+
+.wz-word-list li {
+  font-weight: 600;
+  color: #555;
+  font-size: clamp(0.8rem, 2.8vw, 1rem);
+  letter-spacing: 0.5px;
+}
+
+.wz-word-list li.wz-word-found {
+  color: #27ae60;
+  text-decoration: line-through;
+}
+
+/* ===================== Board ===================== */
+
+#wz-board {
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1vh 3vw 3vh;
+  min-height: 0;
+}
+
+.wz-grid {
+  display: grid;
+  width: min(96vw, 88vh);
+  height: min(96vw, 88vh);
+  gap: 1px;
+  background: #ddd;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.wz-cell {
+  background: #fff;
+  border: none;
+  font-size: clamp(0.6rem, 3vw, 1.1rem);
+  font-weight: 600;
+  color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.wz-cell.wz-selecting {
+  background: #bfe4ff;
+  color: #2980b9;
+}
+
+.wz-cell.wz-found {
+  background: #d4f5df;
+  color: #27ae60;
+}
+
+/* ===================== Celebration / shared buttons ===================== */
+
+.wz-title {
+  font-size: clamp(1.4rem, 6vw, 2.2rem);
+  color: #333;
+  margin-bottom: 2vh;
+}
+
+.wz-start-btn {
+  display: block;
+  margin: 1.5vh auto 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1.5vh 6vw;
+  border: 2px solid #27ae60;
+  border-radius: 16px;
+  background: #2ecc71;
+  color: #fff;
+  box-shadow: 0 4px 0 #229954;
+}
+
+.wz-start-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #229954;
+}
+
+.wz-secondary-btn {
+  background: #fff;
+  color: #333;
+  border-color: #ddd;
+  box-shadow: 0 4px 0 #d0d0d0;
+}
+
+.wz-secondary-btn:active {
+  box-shadow: 0 2px 0 #d0d0d0;
+}
+
+#wz-celebration {
+  position: fixed;
+  inset: 0;
+  pointer-events: auto;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#wz-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#wz-celebration-content {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 4vh 6vw;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
