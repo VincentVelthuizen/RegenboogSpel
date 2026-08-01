@@ -12,6 +12,13 @@ import { renderBoard, bindBoard } from './ui/board.js';
 import { renderPalette, bindPalette } from './ui/palette.js';
 import { renderToolbar, bindToolbar } from './ui/toolbar.js';
 import { showCelebration, hideCelebration, bindCelebration } from './ui/celebration.js';
+import { BABY_VARIANT_GROUP } from './game/variants.js';
+
+const isBabyTheme = new URLSearchParams(window.location.search).get('theme') === 'baby';
+if (isBabyTheme) {
+  const homeBtn = document.querySelector('.home-btn');
+  if (homeBtn) homeBtn.href = 'babyshower.html';
+}
 
 let state = createInitialState();
 
@@ -26,7 +33,7 @@ function render() {
   screens.playing.classList.toggle('hidden', !showPlaying);
 
   if (state.screen === 'menu') {
-    renderMenu();
+    renderMenu(isBabyTheme ? [BABY_VARIANT_GROUP] : undefined);
     hideCelebration();
     return;
   }

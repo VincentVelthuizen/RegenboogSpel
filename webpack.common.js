@@ -8,6 +8,7 @@ module.exports = {
     yahtzee: './js/yahtzee/app.js',
     sudoku: './js/sudoku/app.js',
     woordzoeker: './js/woordzoeker/app.js',
+    jumbolino: './js/jumbolino/app.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -50,6 +51,18 @@ module.exports = {
       template: './woordzoeker.html',
       filename: 'woordzoeker.html',
       chunks: ['woordzoeker'],
+    }),
+    // Jumbolino (babyshower dice game).
+    new HtmlWebpackPlugin({
+      template: './jumbolino.html',
+      filename: 'jumbolino.html',
+      chunks: ['jumbolino'],
+    }),
+    // Babyshower hub menu — pure HTML/CSS, no bundle injected.
+    new HtmlWebpackPlugin({
+      template: './babyshower.html',
+      filename: 'babyshower.html',
+      inject: false,
     }),
   ],
 };

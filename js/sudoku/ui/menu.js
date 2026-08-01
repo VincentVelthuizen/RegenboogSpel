@@ -6,11 +6,11 @@ export function bindMenu(handler) {
   onSelectCallback = handler;
 }
 
-export function renderMenu() {
+export function renderMenu(groups = VARIANT_GROUPS) {
   const container = document.getElementById('su-menu');
   container.innerHTML = '';
 
-  VARIANT_GROUPS.forEach((group) => {
+  groups.forEach((group) => {
     const section = document.createElement('div');
     section.className = 'su-menu-group';
 

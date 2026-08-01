@@ -1,5 +1,6 @@
 import { LEVELS, puzzlesByLevel, getPuzzle } from './game/puzzles.js';
 import { STAR_LEVEL, CONSTELLATIONS, getConstellation } from './game/constellations.js';
+import { BABY_LEVEL, BABY_PUZZLES, getBabyPuzzle } from './game/babypuzzles.js';
 import {
   createInitialState,
   selectLevel,
@@ -15,16 +16,24 @@ import { bindCelebration, showCelebration, hideCelebration } from './ui/reveal.j
 // The numbered difficulty levels plus the constellation ("✨") level.
 const MENU_LEVELS = [...LEVELS, STAR_LEVEL];
 
-// Figures live in two catalogs; ids are unique across both.
+// Figures live in three catalogs; ids are unique across all of them.
 function figuresForLevel(level) {
-  return level === STAR_LEVEL ? CONSTELLATIONS : puzzlesByLevel(level);
+  if (level === STAR_LEVEL) return CONSTELLATIONS;
+  if (level === BABY_LEVEL) return BABY_PUZZLES;
+  return puzzlesByLevel(level);
 }
 
 function getFigure(id) {
-  return getConstellation(id) || getPuzzle(id);
+  return getConstellation(id) || getBabyPuzzle(id) || getPuzzle(id);
 }
 
-let state = createInitialState();
+const isBabyTheme = new URLSearchParams(window.location.search).get('theme') === 'baby';
+if (isBabyTheme) {
+  const homeBtn = document.querySelector('.home-btn');
+  if (homeBtn) homeBtn.href = 'babyshower.html';
+}
+
+let state = isBabyTheme ? selectLevel(createInitialState(), BABY_LEVEL) : createInitialState();
 
 // True whenever the current screen is showing constellations, so the night-sky
 // theme can be toggled on the whole game.
@@ -68,6 +77,10 @@ function onSelectPuzzle(id) {
 }
 
 function onBackToLevels() {
+  if (isBabyTheme) {
+    window.location.href = 'babyshower.html';
+    return;
+  }
   state = backToLevels(state);
   render();
 }

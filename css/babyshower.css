@@ -1,0 +1,34 @@
+html, body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body.babyshower-body {
+  background: linear-gradient(180deg, #fff5f9 0%, #f5f9ff 60%, #fafafa 100%);
+}
+
+#babyshower-menu {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5vh;
+  padding: 10vh 4vw 6vh;
+}
+
+.babyshower-title {
+  font-size: clamp(1.6rem, 7vw, 2.6rem);
+  color: #d6608a;
+  text-align: center;
+}
+
+.babyshower-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6vw;
+}

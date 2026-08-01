@@ -1,6 +1,6 @@
 import { hasConflict } from '../game/state.js';
 import { boxOrigin } from '../game/grid.js';
-import { KIDS_SYMBOLS } from '../game/variants.js';
+import { SYMBOL_SETS } from '../game/variants.js';
 
 let onSelectCallback = null;
 
@@ -19,7 +19,7 @@ export function renderBoard(state) {
   container.innerHTML = '';
 
   const { size, boxRows, boxCols, puzzle, given, selected } = state;
-  const kidsSymbols = KIDS_SYMBOLS[state.variantId];
+  const kidsSymbols = SYMBOL_SETS[state.variantId];
 
   const grid = document.createElement('div');
   grid.className = 'su-grid';

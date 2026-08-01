@@ -1,0 +1,100 @@
+#jumbolino-game {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3vh;
+  padding: 10vh 6vw 6vh;
+  text-align: center;
+  background: linear-gradient(180deg, #fff5f9 0%, #f5f9ff 60%, #fafafa 100%);
+}
+
+html, body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#jl-title {
+  font-size: clamp(1.5rem, 6vw, 2.4rem);
+  color: #d6608a;
+}
+
+#jl-die {
+  width: clamp(120px, 32vw, 200px);
+  height: clamp(120px, 32vw, 200px);
+  font-size: clamp(4rem, 18vw, 8rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 3px solid #f6c9dc;
+  border-radius: 24%;
+  box-shadow: 0 6px 0 #f0aecb;
+  line-height: 1;
+}
+
+#jl-die.jl-die-rolling {
+  animation: jl-die-shake 450ms ease-in-out;
+}
+
+@keyframes jl-die-shake {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  20%      { transform: rotate(-15deg) scale(1.05); }
+  40%      { transform: rotate(12deg) scale(1.05); }
+  60%      { transform: rotate(-10deg) scale(1.05); }
+  80%      { transform: rotate(8deg) scale(1.05); }
+}
+
+#jl-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5vh;
+  min-height: 4vh;
+  width: 100%;
+}
+
+.jl-face-label {
+  font-size: clamp(1rem, 4vw, 1.3rem);
+  font-weight: 700;
+  color: #6c8ee0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.jl-prompt-card {
+  max-width: min(90vw, 480px);
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  box-shadow: 0 4px 0 #d0d0d0;
+  padding: 3vh 6vw;
+  font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+  color: #333;
+  line-height: 1.4;
+}
+
+.jl-roll-btn {
+  font-size: clamp(1rem, 4vw, 1.3rem);
+  font-weight: 700;
+  padding: 2vh 8vw;
+  border: 2px solid #e05a8a;
+  border-radius: 20px;
+  background: #ff6f9c;
+  color: #fff;
+  box-shadow: 0 4px 0 #c9436c;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.jl-roll-btn:not(:disabled):active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #c9436c;
+}
+
+.jl-roll-btn:disabled {
+  opacity: 0.7;
+}

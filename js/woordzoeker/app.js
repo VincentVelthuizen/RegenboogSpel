@@ -12,7 +12,15 @@ import { renderBoard, renderWordList, bindBoard } from './ui/board.js';
 import { renderToolbar, bindToolbar } from './ui/toolbar.js';
 import { showCelebration, hideCelebration, bindCelebration } from './ui/celebration.js';
 
-let state = createInitialState();
+const isBabyTheme = new URLSearchParams(window.location.search).get('theme') === 'baby';
+if (isBabyTheme) {
+  const homeBtn = document.querySelector('.home-btn');
+  if (homeBtn) homeBtn.href = 'babyshower.html';
+}
+
+let state = isBabyTheme
+  ? selectTheme(chooseMode(createInitialState(), 'standard'), 'baby')
+  : createInitialState();
 
 const screens = {
   mode: document.getElementById('wz-mode'),

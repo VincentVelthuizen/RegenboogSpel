@@ -69,6 +69,13 @@ export const THEMES = [
     modes: ['standard'],
     words: ['GITAAR', 'PIANO', 'VIOOL', 'TROMPET', 'DRUM', 'ZANGER', 'ORKEST', 'MELODIE', 'RITME', 'SAXOFOON', 'KLARINET', 'CELLO', 'HARP', 'ACCORDEON', 'XYLOFOON'],
   },
+  {
+    id: 'baby',
+    label: 'Baby',
+    emoji: '👶',
+    modes: ['standard'],
+    words: ['BABY', 'ZWANGER', 'GEBOORTE', 'LUIER', 'FLESJE', 'SPEEN', 'WIEGJE', 'NAVELSTRENG', 'ECHO', 'KRAAMVISITE', 'ROMPERTJE', 'RAMMELAAR', 'KINDERWAGEN', 'MOEDERMELK', 'VROEDVROUW', 'SLAAPZAK', 'KRAAMPAKKET'],
+  },
 ];
 
 const KIDS_MAX_WORD_LENGTH = 5;

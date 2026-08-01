@@ -39,6 +39,20 @@ describe('startPuzzle', () => {
   });
 });
 
+describe('startPuzzle — babyshower variants', () => {
+  it('generates a valid 4x4 puzzle for baby4', () => {
+    const s = startPuzzle(createInitialState(), 'baby4', seededRng(20));
+    expect(s.size).toBe(4);
+    const givenCount = s.given.flat().filter(Boolean).length;
+    expect(givenCount).toBeLessThanOrEqual(10);
+  });
+
+  it('generates a valid 6x6 puzzle for baby6', () => {
+    const s = startPuzzle(createInitialState(), 'baby6', seededRng(21));
+    expect(s.size).toBe(6);
+  });
+});
+
 describe('selectCell', () => {
   it('selects an empty cell', () => {
     let s = startPuzzle(createInitialState(), 'kids4', seededRng(2));

@@ -1,4 +1,4 @@
-import { KIDS_SYMBOLS } from '../game/variants.js';
+import { SYMBOL_SETS } from '../game/variants.js';
 
 let onValueCallback = null;
 let onClearCallback = null;
@@ -13,7 +13,7 @@ export function renderPalette(state) {
   container.innerHTML = '';
   if (state.screen !== 'playing' && state.screen !== 'celebrating') return;
 
-  const kidsSymbols = KIDS_SYMBOLS[state.variantId];
+  const kidsSymbols = SYMBOL_SETS[state.variantId];
   const row = document.createElement('div');
   row.className = 'su-palette-row';
 
