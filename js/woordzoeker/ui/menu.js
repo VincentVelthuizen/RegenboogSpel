@@ -1,4 +1,4 @@
-import { THEMES } from '../game/puzzles.js';
+import { themesForMode } from '../game/puzzles.js';
 
 const MODES = [
   { id: 'kids', emoji: '🧸', label: 'Kids', sub: 'kleine woorden, kleiner raster' },
@@ -48,7 +48,7 @@ export function renderModeSelect() {
   });
 }
 
-export function renderThemeSelect() {
+export function renderThemeSelect(mode) {
   const container = document.getElementById('wz-theme');
   container.innerHTML = '';
 
@@ -63,7 +63,7 @@ export function renderThemeSelect() {
   grid.className = 'wz-menu-row';
   container.appendChild(grid);
 
-  THEMES.forEach((theme) => {
+  themesForMode(mode).forEach((theme) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'wz-menu-card';

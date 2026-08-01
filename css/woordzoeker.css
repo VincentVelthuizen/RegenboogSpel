@@ -172,6 +172,8 @@ html, body {
   border: 2px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
+  /* Dragging across letters must not also pan the page. */
+  touch-action: none;
 }
 
 .wz-cell {
@@ -186,7 +188,8 @@ html, body {
   padding: 0;
 }
 
-.wz-cell.wz-selecting {
+.wz-cell.wz-selecting,
+.wz-cell.wz-dragging {
   background: #bfe4ff;
   color: #2980b9;
 }

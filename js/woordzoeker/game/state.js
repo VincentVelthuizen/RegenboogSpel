@@ -13,7 +13,7 @@ const ALL_DIRECTIONS = [
 
 const MODE_CONFIG = {
   kids: { minSize: 6, directions: KIDS_DIRECTIONS, maxWords: 6, margin: 1 },
-  standard: { minSize: 12, directions: ALL_DIRECTIONS, maxWords: 10, margin: 2 },
+  standard: { minSize: 13, directions: ALL_DIRECTIONS, maxWords: 12, margin: 2 },
 };
 
 export function createInitialState() {
@@ -53,7 +53,7 @@ export function newPuzzle(state, rng = Math.random) {
   return selectTheme(state, state.themeId, rng);
 }
 
-function computeLine(start, end) {
+export function computeLine(start, end) {
   const dRow = end.row - start.row;
   const dCol = end.col - start.col;
   const steps = Math.max(Math.abs(dRow), Math.abs(dCol));

@@ -33,7 +33,7 @@ function render() {
   }
 
   if (state.screen === 'theme') {
-    renderThemeSelect();
+    renderThemeSelect(state.mode);
     hideCelebration();
     return;
   }
