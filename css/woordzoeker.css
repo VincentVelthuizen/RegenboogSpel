@@ -1,18 +1,23 @@
+html, body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 #wz-game {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .wz-screen {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
 }
 
 /* ===================== Mode / theme menus ===================== */
@@ -156,16 +161,12 @@
   align-items: center;
   justify-content: center;
   padding: 1vh 3vw 3vh;
-  min-height: 0;
 }
 
 .wz-grid {
   display: grid;
-  aspect-ratio: 1;
-  width: auto;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
+  width: min(94vw, 68vh);
+  height: min(94vw, 68vh);
   gap: 1px;
   background: #ddd;
   border: 2px solid #ddd;

@@ -1,18 +1,23 @@
+html, body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 #sudoku-game {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .su-screen {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
 }
 
 /* ===================== Menu ===================== */
@@ -101,16 +106,12 @@
   align-items: center;
   justify-content: center;
   padding: 1vh 3vw;
-  min-height: 0;
 }
 
 .su-grid {
   display: grid;
-  aspect-ratio: 1;
-  width: auto;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
+  width: min(92vw, 68vh);
+  height: min(92vw, 68vh);
   background: #333;
   gap: 1px;
   border: 2px solid #333;
