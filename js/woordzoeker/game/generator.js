@@ -3,9 +3,9 @@ import { shuffle } from '../../game/random.js';
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const PLACEMENT_ATTEMPTS = 200;
 
-function computeGridSize(words, minSize) {
+function computeGridSize(words, minSize, margin) {
   const longest = words.reduce((max, w) => Math.max(max, w.length), 0);
-  return Math.max(minSize, longest + 2);
+  return Math.max(minSize, longest + margin);
 }
 
 function canPlace(grid, size, word, row, col, dRow, dCol) {
@@ -34,9 +34,9 @@ function place(grid, word, row, col, dRow, dCol) {
 // (as allowed by `directions`), then fills the remaining cells with
 // random letters. Words that can't be placed after a bounded number of
 // attempts are simply left out of the returned word list.
-export function generatePuzzle(words, { minSize, directions, maxWords }, rng = Math.random) {
+export function generatePuzzle(words, { minSize, directions, maxWords, margin = 2 }, rng = Math.random) {
   const chosenWords = shuffle(words, rng).slice(0, maxWords);
-  const size = computeGridSize(chosenWords, minSize);
+  const size = computeGridSize(chosenWords, minSize, margin);
   const grid = Array.from({ length: size }, () => Array(size).fill(null));
   const placedWords = [];
 

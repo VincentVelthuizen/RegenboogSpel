@@ -12,8 +12,8 @@ const ALL_DIRECTIONS = [
 ];
 
 const MODE_CONFIG = {
-  kids: { minSize: 8, directions: KIDS_DIRECTIONS, maxWords: 8 },
-  standard: { minSize: 12, directions: ALL_DIRECTIONS, maxWords: 10 },
+  kids: { minSize: 6, directions: KIDS_DIRECTIONS, maxWords: 6, margin: 1 },
+  standard: { minSize: 12, directions: ALL_DIRECTIONS, maxWords: 10, margin: 2 },
 };
 
 export function createInitialState() {
