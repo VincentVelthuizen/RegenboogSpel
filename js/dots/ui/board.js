@@ -106,7 +106,9 @@ export function revealPicture(puzzle) {
   polygon.setAttribute('class', details && details.length > 0 ? 'dot-fill dot-fill-solid' : 'dot-fill');
   const points = dots.map(([x, y]) => `${x},${y}`).join(' ');
   polygon.setAttribute('points', points);
-  polygon.style.fill = color;
+  // `fill` is the body colour of a cartoon figure; `color` stays the
+  // (darker) outline, i.e. the line the player drew.
+  polygon.style.fill = puzzle.fill || color;
   polygon.style.stroke = color;
   board.insertBefore(polygon, board.firstChild);
 

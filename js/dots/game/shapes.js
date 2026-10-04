@@ -1,5 +1,15 @@
-// Geometry helper for building dot outlines in the 0..100 space.
+// Geometry helpers for building dot outlines in the 0..100 space.
 const r1 = (v) => Math.round(v * 10) / 10;
+
+// `n` points evenly spread along an elliptical arc, from `startDeg` to
+// `endDeg` inclusive. Angles are in screen space (y down), so increasing the
+// angle runs clockwise: 0 = right, 90 = down, 180 = left, 270 = up.
+export function arc(cx, cy, rx, ry, startDeg, endDeg, n) {
+  return Array.from({ length: n }, (_, i) => {
+    const t = ((startDeg + ((endDeg - startDeg) * i) / (n - 1)) * Math.PI) / 180;
+    return [r1(cx + rx * Math.cos(t)), r1(cy + ry * Math.sin(t))];
+  });
+}
 
 // Build a symmetric closed loop from its left half.
 // `half` runs from a top axis-point (x = axis) down to a bottom axis-point;
