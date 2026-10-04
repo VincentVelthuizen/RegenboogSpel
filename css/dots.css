@@ -199,6 +199,23 @@
   to { opacity: 1; }
 }
 
+.constellation-star {
+  fill: #fdfefe;
+  filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px var(--glow-color, #ffe9a8));
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  pointer-events: none;
+  animation: constellation-star-twinkle 900ms ease forwards;
+}
+
+@keyframes constellation-star-twinkle {
+  0%   { opacity: 0; transform: scale(0.2); }
+  40%  { opacity: 1; transform: scale(1.3); }
+  60%  { opacity: 0.7; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 #dots-celebration {
   position: fixed;
   inset: 0;

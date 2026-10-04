@@ -136,11 +136,20 @@ export function revealPicture(puzzle) {
   board.insertBefore(text, polygon.nextSibling);
 }
 
+// A small 4-point sparkle, like a twinkling star glyph (✦).
+function sparklePath(cx, cy, r) {
+  const k = r * 0.22;
+  return `M${cx},${cy - r} Q${cx + k},${cy - k} ${cx + r},${cy} `
+    + `Q${cx + k},${cy + k} ${cx},${cy + r} Q${cx - k},${cy + k} ${cx - r},${cy} `
+    + `Q${cx - k},${cy - k} ${cx},${cy - r} Z`;
+}
+
 // Reveal for a finished constellation: the stars stay stars — no solid
 // fill — but the line connecting them now traces the actual figure (see
 // game/constellations.js), drawn as a glowing outline instead of a flat
 // wash, with small starlight accents and the figure's name like an old
-// star atlas chart.
+// star atlas chart. Each connected dot also gets a twinkling sparkle
+// stamped on top, so it's unmistakably the actual stars of the pattern.
 export function revealConstellation(figure) {
   const board = document.getElementById('board');
   const { dots, color, label, details } = figure;
@@ -169,4 +178,15 @@ export function revealConstellation(figure) {
   name.setAttribute('y', '9');
   name.textContent = label;
   board.appendChild(name);
+
+  // Sparkles on top of everything, one per star, popping in in sequence.
+  dots.forEach(([x, y], i) => {
+    const star = document.createElementNS(SVG_NS, 'path');
+    const r = i % 3 === 0 ? 3.6 : 2.4; // a few brighter "lead" stars for variety
+    star.setAttribute('d', sparklePath(x, y, r));
+    star.setAttribute('class', 'constellation-star');
+    star.style.setProperty('--glow-color', color);
+    star.style.animationDelay = `${150 + i * 40}ms`;
+    board.appendChild(star);
+  });
 }
