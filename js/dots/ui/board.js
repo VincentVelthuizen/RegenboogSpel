@@ -9,17 +9,24 @@ export function renderBoard(puzzle, state, justScored = -1) {
   const board = document.getElementById('board');
   board.innerHTML = '';
 
-  const { dots, color } = puzzle;
+  const { dots, color, lines, dotRadius } = puzzle;
   const { nextDotIndex } = state;
+  const r = dotRadius || 5;
 
-  // Polyline through already-connected dots
+  // Line through already-connected dots. For constellations only the real
+  // star-to-star lines are drawn; a step between two stars that aren't joined
+  // in the figure lifts the pen.
   if (nextDotIndex >= 1) {
-    const polyline = document.createElementNS(SVG_NS, 'polyline');
-    polyline.setAttribute('class', 'dot-line');
-    const points = dots.slice(0, nextDotIndex).map(([x, y]) => `${x},${y}`).join(' ');
-    polyline.setAttribute('points', points);
-    polyline.style.stroke = color;
-    board.appendChild(polyline);
+    const path = document.createElementNS(SVG_NS, 'path');
+    path.setAttribute('class', 'dot-line');
+    const joined = lines ? new Set(lines.map(([a, b]) => (a < b ? `${a}-${b}` : `${b}-${a}`))) : null;
+    const d = dots.slice(0, nextDotIndex).map(([x, y], i) => {
+      const drawn = i > 0 && (!joined || joined.has(`${i - 1}-${i}`));
+      return `${drawn ? 'L' : 'M'}${x},${y}`;
+    }).join(' ');
+    path.setAttribute('d', d);
+    path.style.stroke = color;
+    board.appendChild(path);
   }
 
   // Dot groups. Built in order, then appended lowest-number-last so that
@@ -35,7 +42,7 @@ export function renderBoard(puzzle, state, justScored = -1) {
       hit.setAttribute('class', 'dot-hit');
       hit.setAttribute('cx', String(x));
       hit.setAttribute('cy', String(y));
-      hit.setAttribute('r', '11');
+      hit.setAttribute('r', dotRadius ? String(Math.max(6, r * 2.4)) : '11');
       g.appendChild(hit);
     }
 
@@ -43,7 +50,8 @@ export function renderBoard(puzzle, state, justScored = -1) {
     const circle = document.createElementNS(SVG_NS, 'circle');
     circle.setAttribute('cx', String(x));
     circle.setAttribute('cy', String(y));
-    circle.setAttribute('r', '5');
+    circle.setAttribute('r', String(r));
+    if (dotRadius) circle.style.strokeWidth = String(r * 0.25);
 
     if (i < nextDotIndex) {
       circle.setAttribute('class', i === justScored ? 'dot done collapsing' : 'dot done');
@@ -62,6 +70,7 @@ export function renderBoard(puzzle, state, justScored = -1) {
       text.setAttribute('class', 'dot-num');
       text.setAttribute('x', String(x));
       text.setAttribute('y', String(y));
+      if (dotRadius) text.style.fontSize = `${(r * 1.4).toFixed(2)}px`;
       text.textContent = String(i + 1);
       g.appendChild(text);
     }
@@ -144,49 +153,54 @@ function sparklePath(cx, cy, r) {
     + `Q${cx - k},${cy - k} ${cx},${cy - r} Z`;
 }
 
-// Reveal for a finished constellation: the stars stay stars — no solid
-// fill — but the line connecting them now traces the actual figure (see
-// game/constellations.js), drawn as a glowing outline instead of a flat
-// wash, with small starlight accents and the figure's name like an old
-// star atlas chart. Each connected dot also gets a twinkling sparkle
-// stamped on top, so it's unmistakably the actual stars of the pattern.
+// Stars brighter than this get their (real) name written next to them.
+const NAMED_STAR_MAG = 1.5;
+
+// Reveal for a finished constellation, like a star chart: the whole
+// traditional stick figure lights up (including lines that weren't drawn
+// while tapping), every star gets a sparkle sized by its real brightness
+// (magnitude), the brightest stars are named, and the constellation's name
+// is written where there's room.
 export function revealConstellation(figure) {
   const board = document.getElementById('board');
-  const { dots, color, label, details } = figure;
+  const { dots, color, label, lines, mags, starNames, dotRadius } = figure;
 
-  const outline = document.createElementNS(SVG_NS, 'polygon');
-  outline.setAttribute('class', 'constellation-outline');
-  const points = dots.map(([x, y]) => `${x},${y}`).join(' ');
-  outline.setAttribute('points', points);
-  outline.style.stroke = color;
-  outline.style.setProperty('--glow-color', color);
-  board.insertBefore(outline, board.firstChild);
+  const figureLines = document.createElementNS(SVG_NS, 'path');
+  figureLines.setAttribute('class', 'constellation-outline');
+  figureLines.setAttribute('d', lines.map(([a, b]) => `M${dots[a][0]},${dots[a][1]} L${dots[b][0]},${dots[b][1]}`).join(' '));
+  figureLines.style.stroke = color;
+  figureLines.style.setProperty('--glow-color', color);
+  board.insertBefore(figureLines, board.firstChild);
 
-  if (details && details.length > 0) {
-    let insertAfter = outline;
-    details.forEach((part, i) => {
-      const el = renderDetailPart(part);
-      el.style.animationDelay = `${150 + i * 80}ms`;
-      insertAfter.after(el);
-      insertAfter = el;
-    });
-  }
-
+  const ys = dots.map(([, y]) => y);
+  let nameY = 4;
+  if (Math.min(...ys) > 16) nameY = 9;
+  else if (Math.max(...ys) < 84) nameY = 94;
   const name = document.createElementNS(SVG_NS, 'text');
   name.setAttribute('class', 'constellation-name');
   name.setAttribute('x', '50');
-  name.setAttribute('y', '9');
+  name.setAttribute('y', String(nameY));
   name.textContent = label;
   board.appendChild(name);
 
   // Sparkles on top of everything, one per star, popping in in sequence.
+  // Magnitude runs backwards: smaller = brighter = bigger sparkle.
   dots.forEach(([x, y], i) => {
+    const sparkle = dotRadius * Math.min(1.9, Math.max(0.7, 1.9 - 0.3 * mags[i]));
     const star = document.createElementNS(SVG_NS, 'path');
-    const r = i % 3 === 0 ? 3.6 : 2.4; // a few brighter "lead" stars for variety
-    star.setAttribute('d', sparklePath(x, y, r));
+    star.setAttribute('d', sparklePath(x, y, sparkle));
     star.setAttribute('class', 'constellation-star');
     star.style.setProperty('--glow-color', color);
     star.style.animationDelay = `${150 + i * 40}ms`;
     board.appendChild(star);
+
+    if (mags[i] <= NAMED_STAR_MAG) {
+      const starName = document.createElementNS(SVG_NS, 'text');
+      starName.setAttribute('class', 'constellation-star-name');
+      starName.setAttribute('x', String(x));
+      starName.setAttribute('y', String(y > 88 ? y - sparkle - 2 : y + sparkle + 3));
+      starName.textContent = starNames[i];
+      board.appendChild(starName);
+    }
   });
 }

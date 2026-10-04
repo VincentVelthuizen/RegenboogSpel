@@ -5,6 +5,7 @@ import {
   getConstellation,
 } from '../../js/dots/game/constellations.js';
 import { PUZZLES } from '../../js/dots/game/puzzles.js';
+import { minSpacing } from '../../js/dots/game/sky.js';
 
 describe('CONSTELLATIONS data integrity', () => {
   it('every constellation has id, label, emoji, color and at least 3 stars', () => {
@@ -44,26 +45,49 @@ describe('CONSTELLATIONS data integrity', () => {
     }
   });
 
-  it('has no duplicate consecutive (or wrap-around) dots, since the shape is closed', () => {
+  it('every star has a real name and magnitude', () => {
     for (const c of CONSTELLATIONS) {
-      const { dots } = c;
-      for (let i = 0; i < dots.length; i++) {
-        const next = dots[(i + 1) % dots.length];
-        expect(dots[i]).not.toEqual(next);
-      }
+      expect(c.starNames).toHaveLength(c.dots.length);
+      expect(c.mags).toHaveLength(c.dots.length);
+      c.starNames.forEach((n) => expect(n.length).toBeGreaterThan(0));
+      c.mags.forEach((m) => {
+        expect(m).toBeGreaterThan(-2);
+        expect(m).toBeLessThan(6);
+      });
+      expect(new Set(c.starNames).size).toBe(c.starNames.length);
     }
   });
 
-  it('every detail part has a valid SVG element type and attrs', () => {
-    const VALID_TYPES = ['circle', 'ellipse', 'path', 'line', 'rect', 'polygon'];
+  it('lines join two different, existing stars and every star is on a line', () => {
     for (const c of CONSTELLATIONS) {
-      expect(Array.isArray(c.details)).toBe(true);
-      expect(c.details.length).toBeGreaterThan(0);
-      for (const part of c.details) {
-        expect(VALID_TYPES).toContain(part.type);
-        expect(typeof part.attrs).toBe('object');
-        expect(part.fill || part.stroke).toBeTruthy();
+      const used = new Set();
+      for (const [a, b] of c.lines) {
+        expect(Number.isInteger(a)).toBe(true);
+        expect(Number.isInteger(b)).toBe(true);
+        expect(a).not.toBe(b);
+        expect(a).toBeGreaterThanOrEqual(0);
+        expect(b).toBeLessThan(c.dots.length);
+        used.add(a);
+        used.add(b);
       }
+      expect(used.size).toBe(c.dots.length);
+    }
+  });
+
+  it('keeps stars far enough apart to tap, with dots sized to fit', () => {
+    for (const c of CONSTELLATIONS) {
+      const spacing = minSpacing(c.dots);
+      expect(spacing).toBeGreaterThanOrEqual(5);
+      expect(c.dotRadius * 2).toBeLessThan(spacing);
+    }
+  });
+
+  it('mostly follows the real lines while tapping (at most 2 pen lifts)', () => {
+    for (const c of CONSTELLATIONS) {
+      const joined = new Set(c.lines.map(([a, b]) => `${Math.min(a, b)}-${Math.max(a, b)}`));
+      let lifts = 0;
+      for (let i = 1; i < c.dots.length; i++) if (!joined.has(`${i - 1}-${i}`)) lifts++;
+      expect(lifts).toBeLessThanOrEqual(2);
     }
   });
 
@@ -81,6 +105,29 @@ describe('CONSTELLATIONS data integrity', () => {
     for (const c of CONSTELLATIONS) {
       expect(puzzleIds.has(c.id)).toBe(false);
     }
+  });
+});
+
+describe('real sky layout', () => {
+  it("Orion: Betelgeuse is up-left of Rigel, and the belt runs between them", () => {
+    const orion = getConstellation('orion');
+    const at = (name) => orion.dots[orion.starNames.indexOf(name)];
+    const [bx, by] = at('Betelgeuse');
+    const [rx, ry] = at('Rigel');
+    expect(bx).toBeLessThan(rx);
+    expect(by).toBeLessThan(ry);
+    for (const belt of ['Mintaka', 'Alnilam', 'Alnitak']) {
+      const [, y] = at(belt);
+      expect(y).toBeGreaterThan(by);
+      expect(y).toBeLessThan(ry);
+    }
+  });
+
+  it('Cassiopeia is a W: its middle star sits higher than the two dips', () => {
+    const cas = getConstellation('cassiopeia');
+    const at = (name) => cas.dots[cas.starNames.indexOf(name)];
+    expect(at('Navi')[1]).toBeLessThan(at('Shedar')[1]);
+    expect(at('Navi')[1]).toBeLessThan(at('Ruchbah')[1] + 1);
   });
 });
 
