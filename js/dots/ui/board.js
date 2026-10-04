@@ -135,3 +135,38 @@ export function revealPicture(puzzle) {
   text.textContent = emoji;
   board.insertBefore(text, polygon.nextSibling);
 }
+
+// Reveal for a finished constellation: the stars stay stars — no solid
+// fill — but the line connecting them now traces the actual figure (see
+// game/constellations.js), drawn as a glowing outline instead of a flat
+// wash, with small starlight accents and the figure's name like an old
+// star atlas chart.
+export function revealConstellation(figure) {
+  const board = document.getElementById('board');
+  const { dots, color, label, details } = figure;
+
+  const outline = document.createElementNS(SVG_NS, 'polygon');
+  outline.setAttribute('class', 'constellation-outline');
+  const points = dots.map(([x, y]) => `${x},${y}`).join(' ');
+  outline.setAttribute('points', points);
+  outline.style.stroke = color;
+  outline.style.setProperty('--glow-color', color);
+  board.insertBefore(outline, board.firstChild);
+
+  if (details && details.length > 0) {
+    let insertAfter = outline;
+    details.forEach((part, i) => {
+      const el = renderDetailPart(part);
+      el.style.animationDelay = `${150 + i * 80}ms`;
+      insertAfter.after(el);
+      insertAfter = el;
+    });
+  }
+
+  const name = document.createElementNS(SVG_NS, 'text');
+  name.setAttribute('class', 'constellation-name');
+  name.setAttribute('x', '50');
+  name.setAttribute('y', '9');
+  name.textContent = label;
+  board.appendChild(name);
+}

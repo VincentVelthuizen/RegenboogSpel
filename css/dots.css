@@ -168,6 +168,37 @@
   100% { transform: scale(1);    opacity: 1; }
 }
 
+/* Constellation reveal: the stars stay stars — a glowing traced outline,
+   never a solid fill, so it still reads as a sky full of connected stars. */
+.constellation-outline {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px var(--glow-color, currentColor)) drop-shadow(0 0 8px var(--glow-color, currentColor));
+  opacity: 0;
+  animation: constellation-outline-in 900ms ease forwards;
+}
+
+@keyframes constellation-outline-in {
+  to { opacity: 0.9; }
+}
+
+.constellation-name {
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-size: 7px;
+  fill: #ffe9a8;
+  font-family: system-ui, sans-serif;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  animation: constellation-name-in 800ms ease 300ms forwards;
+}
+
+@keyframes constellation-name-in {
+  to { opacity: 1; }
+}
+
 #dots-celebration {
   position: fixed;
   inset: 0;
