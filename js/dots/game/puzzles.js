@@ -38,13 +38,26 @@ const CATALOG = [
 
   // ============== Level 2 — recognisable figures (15-25 dots) ==============
   { id: 'olifant', label: 'olifant', emoji: '🐘', color: '#95a5a6',
-    dots: [[26,30],[45,21],[67,22],[85,31],[90,51],[95,62],[87,71],[82,85],[71,85],[66,64],[48,85],[37,85],[30,66],[22,80],[13,86],[10,66],[14,46],[20,36]] },
+    dots: [[26,30],[45,21],[67,22],[85,31],[90,51],[95,62],[87,71],[82,85],[71,85],[66,64],[48,85],[37,85],[30,66],[22,80],[13,86],[10,66],[14,46],[20,36]],
+    details: [
+      { type: 'circle', attrs: { cx: 66, cy: 42, r: 3 }, fill: '#2c3436' },
+      { type: 'path', attrs: { d: 'M88,55 Q99,62 90,70' }, stroke: '#fdfefe', strokeWidth: 3, fill: 'none' },
+    ] },
   { id: 'huis-2', label: 'huis', emoji: '🏠', color: '#e67e22',
     dots: [[50,9],[34,22],[34,9],[28,9],[28,28],[15,40],[24,40],[24,86],[40,86],[40,62],[60,62],[60,86],[76,86],[76,40],[85,40]] },
   { id: 'auto', label: 'auto', emoji: '🚗', color: '#e74c3c',
     dots: [[12,64],[12,54],[28,54],[38,38],[58,38],[68,54],[88,54],[88,64],[76,64],[74,74],[64,74],[62,64],[44,64],[42,74],[32,74],[30,64]] },
   { id: 'poes', label: 'poes', emoji: '🐱', color: '#f39c12',
-    dots: mirrorX([[50,24],[40,24],[26,8],[32,34],[24,46],[24,60],[34,76],[44,83],[50,85]]) },
+    dots: mirrorX([[50,24],[40,24],[26,8],[32,34],[24,46],[24,60],[34,76],[44,83],[50,85]]),
+    details: [
+      { type: 'circle', attrs: { cx: 42, cy: 38, r: 2.5 }, fill: '#27ae60' },
+      { type: 'circle', attrs: { cx: 58, cy: 38, r: 2.5 }, fill: '#27ae60' },
+      { type: 'path', attrs: { d: 'M46,45 L54,45 L50,50 Z' }, fill: '#ff6b81' },
+      { type: 'line', attrs: { x1: 34, y1: 46, x2: 20, y2: 44 }, stroke: '#fdfefe', strokeWidth: 1.5 },
+      { type: 'line', attrs: { x1: 34, y1: 50, x2: 20, y2: 52 }, stroke: '#fdfefe', strokeWidth: 1.5 },
+      { type: 'line', attrs: { x1: 66, y1: 46, x2: 80, y2: 44 }, stroke: '#fdfefe', strokeWidth: 1.5 },
+      { type: 'line', attrs: { x1: 66, y1: 50, x2: 80, y2: 52 }, stroke: '#fdfefe', strokeWidth: 1.5 },
+    ] },
   { id: 'krab', label: 'krab', emoji: '🦀', color: '#e74c3c',
     dots: mirrorX([[50,38],[38,32],[24,28],[14,18],[10,30],[22,40],[12,48],[22,56],[14,64],[40,66],[50,70]]) },
   { id: 'raket', label: 'raket', emoji: '🚀', color: '#c0392b',

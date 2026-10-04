@@ -127,6 +127,32 @@
   to { fill-opacity: 0.22; }
 }
 
+/* Puzzles with hand-authored cartoon details (see .dot-detail) get a fully
+   opaque fill — the drawn shape IS the picture, not a faint wash behind an
+   emoji stamp. */
+.dot-fill.dot-fill-solid {
+  animation-name: dot-fill-in-solid;
+}
+
+@keyframes dot-fill-in-solid {
+  to { fill-opacity: 1; }
+}
+
+.dot-detail {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dot-detail-in 500ms ease 150ms forwards;
+}
+
+@keyframes dot-detail-in {
+  0%   { transform: scale(0.4); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
 .dot-emoji {
   font-size: 34px;
   text-anchor: middle;
@@ -208,31 +234,4 @@
 
 .starry .back-icon {
   stroke: #cfe0ff;
-}
-
-/* The faint star-atlas figure behind a completed constellation. */
-.constellation-figure {
-  text-anchor: middle;
-  dominant-baseline: central;
-  opacity: 0;
-  animation: constellation-figure-in 800ms ease forwards;
-}
-
-@keyframes constellation-figure-in {
-  to { opacity: 0.16; }
-}
-
-.constellation-name {
-  text-anchor: middle;
-  dominant-baseline: central;
-  font-size: 7px;
-  fill: #ffe9a8;
-  font-family: system-ui, sans-serif;
-  letter-spacing: 0.5px;
-  opacity: 0;
-  animation: constellation-name-in 800ms ease 200ms forwards;
-}
-
-@keyframes constellation-name-in {
-  to { opacity: 1; }
 }

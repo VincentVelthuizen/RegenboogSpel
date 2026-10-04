@@ -78,20 +78,45 @@ export function renderBoard(puzzle, state, justScored = -1) {
   }
 }
 
+function renderDetailPart(part) {
+  const el = document.createElementNS(SVG_NS, part.type);
+  Object.entries(part.attrs || {}).forEach(([k, v]) => el.setAttribute(k, String(v)));
+  el.setAttribute('class', 'dot-detail');
+  if (part.fill) el.style.fill = part.fill;
+  if (part.stroke) el.style.stroke = part.stroke;
+  if (part.strokeWidth) el.style.strokeWidth = String(part.strokeWidth);
+  return el;
+}
+
 export function revealPicture(puzzle) {
   const board = document.getElementById('board');
-  const { dots, color, emoji } = puzzle;
+  const { dots, color, emoji, details } = puzzle;
 
   // Filled polygon at the very back
   const polygon = document.createElementNS(SVG_NS, 'polygon');
-  polygon.setAttribute('class', 'dot-fill');
+  polygon.setAttribute('class', details && details.length > 0 ? 'dot-fill dot-fill-solid' : 'dot-fill');
   const points = dots.map(([x, y]) => `${x},${y}`).join(' ');
   polygon.setAttribute('points', points);
   polygon.style.fill = color;
   polygon.style.stroke = color;
   board.insertBefore(polygon, board.firstChild);
 
-  // Emoji sized to fill the dots' bounding box, centred on it
+  if (details && details.length > 0) {
+    // Hand-authored cartoon accents (eyes, horns, ...) on top of the fill,
+    // in front of each other in the given order, but still BELOW the drawn
+    // lines and dots so the connect-the-dots picture stays visible in front.
+    let insertAfter = polygon;
+    details.forEach((part, i) => {
+      const el = renderDetailPart(part);
+      el.style.animationDelay = `${150 + i * 80}ms`;
+      insertAfter.after(el);
+      insertAfter = el;
+    });
+    return;
+  }
+
+  // Fallback for puzzles without hand-authored details: stamp the emoji,
+  // sized to fill the dots' bounding box, centred on it.
   const xs = dots.map(([x]) => x);
   const ys = dots.map(([, y]) => y);
   const minX = Math.min(...xs);
@@ -108,39 +133,5 @@ export function revealPicture(puzzle) {
   text.setAttribute('y', String(cy));
   text.style.fontSize = `${size}px`;
   text.textContent = emoji;
-  // Place the emoji just above the fill but BELOW the drawn lines and dots,
-  // so the connect-the-dots picture stays visible in front of it.
   board.insertBefore(text, polygon.nextSibling);
-}
-
-// Reveal for a finished constellation: no polygon fill (the figure is an open
-// path). Instead, fade in the star-atlas figure behind the lines and show the
-// constellation's name, like an old celestial chart.
-export function revealConstellation(figure) {
-  const board = document.getElementById('board');
-  const { dots, emoji, label } = figure;
-
-  // Faint figure drawn over the stars, centred on the dots' bounding box.
-  const xs = dots.map(([x]) => x);
-  const ys = dots.map(([, y]) => y);
-  const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
-  const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-  const size = Math.min(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) * 1.4;
-
-  const figureText = document.createElementNS(SVG_NS, 'text');
-  figureText.setAttribute('class', 'constellation-figure');
-  figureText.setAttribute('x', String(cx));
-  figureText.setAttribute('y', String(cy));
-  figureText.style.fontSize = `${size}px`;
-  figureText.textContent = emoji;
-  // Behind the lines and stars so the connected pattern stays in front.
-  board.insertBefore(figureText, board.firstChild);
-
-  // Name banner along the top of the chart.
-  const name = document.createElementNS(SVG_NS, 'text');
-  name.setAttribute('class', 'constellation-name');
-  name.setAttribute('x', '50');
-  name.setAttribute('y', '9');
-  name.textContent = label;
-  board.appendChild(name);
 }

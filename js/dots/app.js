@@ -10,7 +10,7 @@ import {
   backToLevels,
 } from './game/state.js';
 import { renderLevelSelect, renderPuzzlePicker } from './ui/picker.js';
-import { bindBoard, renderBoard, revealPicture, revealConstellation } from './ui/board.js';
+import { bindBoard, renderBoard, revealPicture } from './ui/board.js';
 import { bindCelebration, showCelebration, hideCelebration } from './ui/reveal.js';
 
 // The numbered difficulty levels plus the constellation ("✨") level.
@@ -96,8 +96,7 @@ function onDotTap(i) {
     // `before` is the index of the dot that was just connected.
     renderBoard(figure, state, before);
     if (state.screen === 'celebrating') {
-      if (figure.star) revealConstellation(figure);
-      else revealPicture(figure);
+      revealPicture(figure);
       window.setTimeout(showCelebration, 600);
     }
   }

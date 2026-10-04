@@ -44,6 +44,29 @@ describe('CONSTELLATIONS data integrity', () => {
     }
   });
 
+  it('has no duplicate consecutive (or wrap-around) dots, since the shape is closed', () => {
+    for (const c of CONSTELLATIONS) {
+      const { dots } = c;
+      for (let i = 0; i < dots.length; i++) {
+        const next = dots[(i + 1) % dots.length];
+        expect(dots[i]).not.toEqual(next);
+      }
+    }
+  });
+
+  it('every detail part has a valid SVG element type and attrs', () => {
+    const VALID_TYPES = ['circle', 'ellipse', 'path', 'line', 'rect', 'polygon'];
+    for (const c of CONSTELLATIONS) {
+      expect(Array.isArray(c.details)).toBe(true);
+      expect(c.details.length).toBeGreaterThan(0);
+      for (const part of c.details) {
+        expect(VALID_TYPES).toContain(part.type);
+        expect(typeof part.attrs).toBe('object');
+        expect(part.fill || part.stroke).toBeTruthy();
+      }
+    }
+  });
+
   it('has at least 6 constellations', () => {
     expect(CONSTELLATIONS.length).toBeGreaterThanOrEqual(6);
   });
