@@ -1,10 +1,11 @@
 import { getPuzzle } from '../dots/game/puzzles.js';
-import { getNode } from './game/story.js';
-import { createAdventure, beginAdventure, finishActivity, choose, activityFor } from './game/state.js';
+import { STORIES, getStory, getNode } from './game/story.js';
+import { createAdventure, pickStory, finishActivity, choose, activityFor } from './game/state.js';
 import { startDotsActivity } from './ui/dotsActivity.js';
 import { startColorActivity } from './ui/colorActivity.js';
 import { startPuzzleActivity } from './ui/puzzleActivity.js';
-import { renderStory, renderIntro } from './ui/storyView.js';
+import { startSlideActivity } from './ui/slideActivity.js';
+import { renderStory, renderStoryPicker } from './ui/storyView.js';
 
 const PALETTE = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6'];
 const CONFETTI_COUNT = 40;
@@ -13,16 +14,18 @@ const INSTRUCTIONS = {
   dots: 'Verbind de stippen',
   color: 'Kleur de tekening',
   puzzle: 'Maak de puzzel',
+  slide: 'Schuif de stukjes op hun plek',
 };
 
 const ACTIVITY_START = {
   dots: startDotsActivity,
   color: startColorActivity,
   puzzle: startPuzzleActivity,
+  slide: startSlideActivity,
 };
 
 // How long the finished picture shows before the celebration appears.
-const REVEAL_DELAY = { dots: 900, color: 0, puzzle: 600 };
+const REVEAL_DELAY = { dots: 900, color: 0, puzzle: 600, slide: 800 };
 
 const stage = document.getElementById('stage');
 const celebration = document.getElementById('celebration');
@@ -39,18 +42,26 @@ function clearStage() {
   celebration.classList.add('hidden');
 }
 
+function start(storyId) {
+  state = pickStory(state, storyId);
+  colors = null;
+  render();
+}
+
 function render() {
   clearStage();
-  const node = getNode(state.nodeId);
 
-  if (state.phase === 'intro') {
-    renderIntro(stage, () => { state = beginAdventure(state); render(); });
+  if (state.phase === 'pick') {
+    renderStoryPicker(stage, STORIES, start);
     return;
   }
 
+  const story = getStory(state.storyId);
+  const node = getNode(story, state.nodeId);
+
   if (state.phase === 'activity') {
     const picture = getPuzzle(node.picture);
-    const type = activityFor(state.step, picture);
+    const type = activityFor(story, state.step, picture);
     stage.className = `activity activity-${type}`;
     const label = document.createElement('div');
     label.className = 'activity-label';
@@ -63,9 +74,10 @@ function render() {
     return;
   }
 
-  renderStory(stage, node, colors, {
+  renderStory(stage, story, node, colors, {
     onChoose: (next) => { state = choose(state, next); colors = null; render(); },
-    onRestart: () => { state = beginAdventure(createAdventure()); colors = null; render(); },
+    onRestart: () => start(state.storyId),
+    onStories: () => { state = createAdventure(); render(); },
   });
 }
 

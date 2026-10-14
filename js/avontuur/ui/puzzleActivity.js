@@ -4,9 +4,9 @@ import { drawPicture, svgElement } from './picture.js';
 
 const GAP = 10;
 
-// Jigsaw: the picture's pieces lie shuffled in a tray; drag each one onto
-// the board. A piece dropped on its own cell snaps into place; anywhere else
-// it slides back to the tray. A faint ghost of the picture on the board helps.
+// Jigsaw: the picture's pieces lie shuffled in a tray. Tap a piece and then
+// its spot on the board, or drag it there. A piece on its own cell snaps
+// into place; dropped anywhere else it slides back to the tray. A faint ghost of the picture on the board helps.
 // Returns a cleanup function (removes the resize listener).
 export function startPuzzleActivity(container, picture, onDone) {
   const box = pictureBounds(picture);
@@ -93,49 +93,97 @@ export function startPuzzleActivity(container, picture, onDone) {
     el.style.transform = `scale(${scale})`;
   }
 
+  // Put a piece in its cell for good.
+  function place(piece) {
+    const el = els.get(piece.id);
+    placed.add(piece.id);
+    el.classList.remove('selected');
+    el.classList.add('placed');
+    el.style.zIndex = '0';
+    moveTo(el, geo.bx + piece.col * geo.cw, geo.by + piece.row * geo.ch, 1);
+    if (isSolved(pieces, placed)) {
+      board.classList.add('solved');
+      onDone(null);
+    }
+  }
+
+  // Tap-to-place: tap a piece to pick it up (it lights up), then tap the
+  // spot on the board where it belongs. A wrong spot makes the piece wiggle
+  // and it stays picked up.
+  let selected = null;
+  function select(piece) {
+    selected = selected === piece ? null : piece;
+    els.forEach((el, id) => el.classList.toggle('selected', selected !== null && id === selected.id));
+    board.classList.toggle('awaiting', selected !== null);
+  }
+
+  board.addEventListener('click', (e) => {
+    if (!selected) return;
+    const r = board.getBoundingClientRect();
+    const piece = selected;
+    if (fitsCell(piece, grid, (e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height)) {
+      select(piece);
+      place(piece);
+    } else {
+      const el = els.get(piece.id);
+      el.classList.remove('wiggle');
+      void el.offsetWidth; // restart the animation
+      el.classList.add('wiggle');
+    }
+  });
+
+  // Dragging works too: a press that moves more than a few pixels drags the
+  // piece; a press that stays put is a tap.
+  const DRAG_THRESHOLD = 8;
   function enableDrag(piece, el) {
+    let press = null;
     let grab = null;
     el.addEventListener('pointerdown', (e) => {
       if (placed.has(piece.id)) return;
       e.preventDefault();
       el.setPointerCapture(e.pointerId);
-      const origin = container.getBoundingClientRect();
-      const r = el.getBoundingClientRect();
-      // Where in the piece it was grabbed, as a fraction, so it stays under
-      // the finger while growing from tray size to board size.
-      grab = { fx: (e.clientX - r.left) / r.width, fy: (e.clientY - r.top) / r.height, origin };
-      el.classList.add('dragging');
-      el.style.zIndex = String(++top);
-      follow(e);
+      press = { x: e.clientX, y: e.clientY };
     });
     const follow = (e) => {
       const x = e.clientX - grab.origin.left - grab.fx * geo.cw;
       const y = e.clientY - grab.origin.top - grab.fy * geo.ch;
       moveTo(el, x, y, 1);
     };
-    el.addEventListener('pointermove', (e) => { if (grab) follow(e); });
-    const drop = (e) => {
-      if (!grab) return;
+    el.addEventListener('pointermove', (e) => {
+      if (!press) return;
+      if (!grab) {
+        if (Math.hypot(e.clientX - press.x, e.clientY - press.y) < DRAG_THRESHOLD) return;
+        const origin = container.getBoundingClientRect();
+        const r = el.getBoundingClientRect();
+        // Where in the piece it was grabbed, as a fraction, so it stays under
+        // the finger while growing from tray size to board size.
+        grab = { fx: (press.x - r.left) / r.width, fy: (press.y - r.top) / r.height, origin };
+        if (selected) select(selected);
+        el.classList.add('dragging');
+        el.style.zIndex = String(++top);
+      }
+      follow(e);
+    });
+    const release = (e) => {
+      if (!press) return;
+      press = null;
+      if (!grab) {
+        if (e.type === 'pointerup') select(piece);
+        return;
+      }
       const cx = e.clientX - grab.origin.left - grab.fx * geo.cw + geo.cw / 2;
       const cy = e.clientY - grab.origin.top - grab.fy * geo.ch + geo.ch / 2;
       grab = null;
       el.classList.remove('dragging');
       if (fitsCell(piece, grid, (cx - geo.bx) / geo.bw, (cy - geo.by) / geo.bh)) {
-        placed.add(piece.id);
-        el.classList.add('placed');
-        el.style.zIndex = '0';
-        moveTo(el, geo.bx + piece.col * geo.cw, geo.by + piece.row * geo.ch, 1);
-        if (isSolved(pieces, placed)) {
-          board.classList.add('solved');
-          onDone(null);
-        }
+        place(piece);
       } else {
         const slot = geo.slots.get(piece.id);
         moveTo(el, slot.x, slot.y, geo.s);
       }
     };
-    el.addEventListener('pointerup', drop);
-    el.addEventListener('pointercancel', drop);
+    el.addEventListener('pointerup', release);
+    el.addEventListener('pointercancel', release);
   }
 
   layout();

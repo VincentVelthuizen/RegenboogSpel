@@ -10,7 +10,7 @@
   overflow: hidden;
 }
 
-/* ---------- Intro ---------- */
+/* ---------- Story picker ---------- */
 
 .intro {
   height: 100%;
@@ -19,12 +19,12 @@
   align-items: center;
   justify-content: center;
   gap: 3vh;
-  padding: 6vh 8vw;
+  padding: 6vh 6vw;
   text-align: center;
 }
 
 .intro-emoji {
-  font-size: clamp(4rem, 18vmin, 9rem);
+  font-size: clamp(3.5rem, 14vmin, 7rem);
   line-height: 1;
 }
 
@@ -34,24 +34,44 @@
   color: #7c3a10;
 }
 
-.intro-text {
-  font-size: clamp(1.1rem, 3.4vmin, 1.7rem);
-  color: #5b4636;
-  max-width: 36em;
+.story-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(16px, 4vmin, 40px);
 }
 
-.start-btn {
-  width: clamp(84px, 20vmin, 150px);
-  height: clamp(84px, 20vmin, 150px);
-  border: none;
-  border-radius: 50%;
-  background: #f59e0b;
-  color: #fff;
-  font-size: clamp(2.4rem, 9vmin, 4.5rem);
-  padding-left: 0.12em;
-  box-shadow: 0 5px 0 #c27803;
+.story-card {
+  width: clamp(140px, 34vmin, 260px);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  background: #fff;
+  border: 2px solid #eadcc6;
+  border-radius: 20%;
+  box-shadow: 0 5px 0 #e2cfb0;
+  color: #3f3024;
+  font: inherit;
   cursor: pointer;
-  animation: soft-pulse 1.4s ease-in-out infinite;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.story-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #e2cfb0;
+}
+
+.story-card-emoji {
+  font-size: clamp(3.4rem, 15vmin, 7rem);
+  line-height: 1;
+}
+
+.story-card-title {
+  font-size: clamp(1rem, 3.2vmin, 1.5rem);
+  font-weight: 700;
 }
 
 @keyframes soft-pulse {
@@ -199,10 +219,127 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
+.puzzle-piece.selected {
+  box-shadow: 0 0 0 4px #f59e0b, 0 8px 18px rgba(0, 0, 0, 0.3);
+  z-index: 50;
+}
+
+.puzzle-piece.wiggle {
+  animation: wiggle 350ms ease;
+}
+
+@keyframes wiggle {
+  20% { translate: -6px 0; }
+  40% { translate: 6px 0; }
+  60% { translate: -4px 0; }
+  80% { translate: 4px 0; }
+}
+
+/* A piece is picked up: the board invites a tap. */
+.puzzle-board.awaiting {
+  box-shadow: 0 0 0 4px #f59e0b;
+  animation: board-invite 1.2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes board-invite {
+  0%, 100% { box-shadow: 0 0 0 3px #f59e0b; }
+  50%      { box-shadow: 0 0 0 7px #fcd34d; }
+}
+
 .puzzle-piece.placed {
   border-radius: 0;
   box-shadow: none;
   cursor: default;
+  pointer-events: none;
+}
+
+/* Sliding puzzle */
+.activity-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3vh;
+  padding: 9vh 4vw 3vh;
+}
+
+.slide-board {
+  position: relative;
+  flex: 0 0 auto;
+  background: #eadcc6;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px #eadcc6;
+}
+
+.slide-tile {
+  position: absolute;
+  padding: 0;
+  border: none;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px #eadcc6;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.slide-tile.animated {
+  transition: left 180ms ease, top 180ms ease, opacity 400ms ease;
+}
+
+.slide-tile svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.slide-tile.movable {
+  box-shadow: inset 0 0 0 3px #f59e0b;
+}
+
+.slide-tile.nudge {
+  animation: nudge 300ms ease;
+}
+
+@keyframes nudge {
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.slide-tile.slide-missing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.slide-board.solved .slide-tile {
+  box-shadow: none;
+}
+
+.slide-board.solved .slide-missing {
+  opacity: 1;
+}
+
+.slide-board.solved {
+  box-shadow: 0 0 0 4px #2ecc71;
+}
+
+.slide-example {
+  flex: 0 1 auto;
+  width: clamp(80px, 22vmin, 180px);
+  height: clamp(80px, 22vmin, 180px);
+  background: #fff;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 2px 0 #eadcc6;
+}
+
+@media (orientation: landscape) {
+  .activity-slide {
+    flex-direction: row;
+    gap: 5vw;
+    padding: 10vh 4vw 4vh;
+  }
 }
 
 /* ---------- Story ---------- */

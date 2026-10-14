@@ -30,8 +30,9 @@ function audioButton(src) {
 }
 
 // The story step: the picture the child just made (in their colours), the
-// text to read aloud, and the choices — or, at an ending, "again" / "home".
-export function renderStory(container, node, colors, { onChoose, onRestart }) {
+// text to read aloud, and the choices — or, at an ending, "again" /
+// "another story" / "home".
+export function renderStory(container, story, node, colors, { onChoose, onRestart, onStories }) {
   const view = document.createElement('div');
   view.className = 'story';
 
@@ -55,7 +56,8 @@ export function renderStory(container, node, colors, { onChoose, onRestart }) {
   if (isEnding(node)) {
     side.appendChild(span('story-end', 'Einde'));
     choices.append(
-      button('choice-btn', [span('choice-emoji', '🔁'), span('choice-label', 'Nog een avontuur')], 'nog een avontuur', onRestart),
+      button('choice-btn', [span('choice-emoji', '🔁'), span('choice-label', 'Nog een keer')], 'nog een keer', onRestart),
+      button('choice-btn', [span('choice-emoji', '📖'), span('choice-label', 'Ander verhaal')], 'ander verhaal', onStories),
     );
     const home = document.createElement('a');
     home.className = 'choice-btn';
@@ -65,7 +67,7 @@ export function renderStory(container, node, colors, { onChoose, onRestart }) {
     choices.appendChild(home);
   } else {
     node.choices.forEach((choice) => {
-      const emoji = getPuzzle(getNode(choice.next).picture).emoji;
+      const emoji = getPuzzle(getNode(story, choice.next).picture).emoji;
       choices.appendChild(button('choice-btn', [span('choice-emoji', emoji), span('choice-label', choice.label)],
         choice.label, () => onChoose(choice.next)));
     });
@@ -75,14 +77,17 @@ export function renderStory(container, node, colors, { onChoose, onRestart }) {
   container.appendChild(view);
 }
 
-export function renderIntro(container, onStart) {
+// Title screen: one big card per story.
+export function renderStoryPicker(container, stories, onPick) {
   const view = document.createElement('div');
   view.className = 'intro';
-  view.append(
-    span('intro-emoji', '📖'),
-    span('intro-title', 'Het avontuur van Pip'),
-    span('intro-text', 'Wie gaat er vandaag op avontuur? Maak de tekening en ontdek het!'),
-    button('start-btn', ['▶'], 'begin', onStart),
-  );
+  view.append(span('intro-emoji', '📖'), span('intro-title', 'Kies een avontuur'));
+  const cards = document.createElement('div');
+  cards.className = 'story-cards';
+  stories.forEach((story) => {
+    cards.appendChild(button('story-card', [span('story-card-emoji', story.emoji), span('story-card-title', story.title)],
+      story.title, () => onPick(story.id)));
+  });
+  view.appendChild(cards);
   container.appendChild(view);
 }

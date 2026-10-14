@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   colorRegions, isColorable, pathBoxArea, paint, isFullyColored, BODY, PALETTE,
 } from '../../js/avontuur/game/coloring.js';
-import { STORY } from '../../js/avontuur/game/story.js';
+import { STORIES } from '../../js/avontuur/game/story.js';
 import { getPuzzle } from '../../js/dots/game/puzzles.js';
 
 describe('colouring page', () => {
@@ -20,7 +20,7 @@ describe('colouring page', () => {
   });
 
   it('always has the body as the first region', () => {
-    for (const node of Object.values(STORY)) {
+    for (const node of STORIES.flatMap((s) => Object.values(s.nodes))) {
       const regions = colorRegions(getPuzzle(node.picture));
       expect(regions[0]).toBe(BODY);
       expect(new Set(regions).size).toBe(regions.length);
