@@ -74,7 +74,7 @@
   align-items: center;
   justify-content: center;
   /* Sized so all cards fit on one screen: 3 per row standing up, a single
-     row lying down. */
+     row of six lying down. */
   --card: clamp(88px, min(27vw, 17vh), 220px);
   width: var(--card);
   height: var(--card);
@@ -108,6 +108,6 @@
 
 @media (orientation: landscape) {
   .menu-card {
-    --card: clamp(88px, min(15vw, 30vh), 220px);
+    --card: clamp(88px, min(13vw, 30vh), 220px);
   }
 }

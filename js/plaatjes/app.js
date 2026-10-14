@@ -3,12 +3,18 @@ import { pictureThumbnail } from '../dots/ui/picture.js';
 import { startColorActivity } from '../avontuur/ui/colorActivity.js';
 import { startPuzzleActivity } from '../avontuur/ui/puzzleActivity.js';
 import { startSlideActivity } from '../avontuur/ui/slideActivity.js';
-import { MODES, modeFromSearch } from './modes.js';
+import { startParcoursActivity } from '../avontuur/ui/parcoursActivity.js';
+import { COURSES } from '../avontuur/game/parcours.js';
+import { MODES, PARCOURS_HERO, modeFromSearch } from './modes.js';
 
-const START = { color: startColorActivity, puzzle: startPuzzleActivity, slide: startSlideActivity };
-const INSTRUCTIONS = { color: 'Kleur de tekening', puzzle: 'Maak de puzzel', slide: 'Schuif de stukjes op hun plek' };
+const START = {
+  color: startColorActivity, puzzle: startPuzzleActivity, slide: startSlideActivity, parcours: startParcoursActivity,
+};
+const INSTRUCTIONS = {
+  color: 'Kleur de tekening', puzzle: 'Maak de puzzel', slide: 'Schuif de stukjes op hun plek', parcours: 'Breng Bruno naar het plaatje',
+};
 // How long the finished picture shows before the celebration appears.
-const REVEAL_DELAY = { color: 0, puzzle: 600, slide: 800 };
+const REVEAL_DELAY = { color: 0, puzzle: 600, slide: 800, parcours: 700 };
 const PALETTE = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6'];
 const CONFETTI_COUNT = 40;
 
@@ -18,6 +24,9 @@ const celebration = document.getElementById('celebration');
 const homeBtn = document.querySelector('.home-btn');
 let pictureId = null; // null: choosing a picture
 let cleanup = null;
+// The parcours takes turns between the landscapes.
+const courseIds = Object.keys(COURSES);
+let courseTurn = Math.floor(Math.random() * courseIds.length);
 
 document.title = mode.title;
 
@@ -63,9 +72,10 @@ function render() {
   label.className = 'activity-label';
   label.textContent = INSTRUCTIONS[mode.activity];
   stage.appendChild(label);
+  const options = { hero: getPuzzle(PARCOURS_HERO), course: courseIds[courseTurn++ % courseIds.length] };
   cleanup = START[mode.activity](stage, getPuzzle(pictureId), () => {
     window.setTimeout(celebrate, REVEAL_DELAY[mode.activity]);
-  }) || null;
+  }, options) || null;
 }
 
 function celebrate() {

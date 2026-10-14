@@ -1,10 +1,14 @@
-// The three stand-alone picture games. They share the picture picker and the
+// The stand-alone picture games. They share the picture picker and the
 // activities of the adventure game (see ../avontuur/ui/).
 export const MODES = {
   kleuren: { activity: 'color', title: 'Kleurplaat', icon: '🖍️' },
   legpuzzel: { activity: 'puzzle', title: 'Legpuzzel', icon: '🧩' },
   schuifpuzzel: { activity: 'slide', title: 'Schuifpuzzel', icon: '🔲' },
+  parcours: { activity: 'parcours', title: 'Parcours', icon: '🚩' },
 };
+
+// Who walks the stand-alone parcours.
+export const PARCOURS_HERO = 'beer';
 
 export const DEFAULT_MODE = 'kleuren';
 
