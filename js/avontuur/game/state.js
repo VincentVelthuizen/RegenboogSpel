@@ -1,9 +1,10 @@
 import { getStory, getNode } from './story.js';
 
 // What the child can do with a step's picture: connect the dots, colour it
-// in, put it together as a jigsaw, or solve it as a sliding puzzle. Each
-// story sets the order in which they take turns.
-export const ACTIVITIES = ['dots', 'color', 'puzzle', 'slide'];
+// in, put it together as a jigsaw, solve it as a sliding puzzle, or walk the
+// story's hero along a parcours to it. Each story sets the order in which
+// they take turns.
+export const ACTIVITIES = ['dots', 'color', 'puzzle', 'slide', 'parcours'];
 
 // Pictures with more dots than this are too long a detour in a story; they
 // become a colouring page instead.

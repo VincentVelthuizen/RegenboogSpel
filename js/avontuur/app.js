@@ -5,6 +5,7 @@ import { startDotsActivity } from './ui/dotsActivity.js';
 import { startColorActivity } from './ui/colorActivity.js';
 import { startPuzzleActivity } from './ui/puzzleActivity.js';
 import { startSlideActivity } from './ui/slideActivity.js';
+import { startParcoursActivity } from './ui/parcoursActivity.js';
 import { renderStory, renderStoryPicker } from './ui/storyView.js';
 
 const PALETTE = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6'];
@@ -15,6 +16,7 @@ const INSTRUCTIONS = {
   color: 'Kleur de tekening',
   puzzle: 'Maak de puzzel',
   slide: 'Schuif de stukjes op hun plek',
+  parcours: 'Volg het pad',
 };
 
 const ACTIVITY_START = {
@@ -22,10 +24,11 @@ const ACTIVITY_START = {
   color: startColorActivity,
   puzzle: startPuzzleActivity,
   slide: startSlideActivity,
+  parcours: startParcoursActivity,
 };
 
 // How long the finished picture shows before the celebration appears.
-const REVEAL_DELAY = { dots: 900, color: 0, puzzle: 600, slide: 800 };
+const REVEAL_DELAY = { dots: 900, color: 0, puzzle: 600, slide: 800, parcours: 700 };
 
 const stage = document.getElementById('stage');
 const celebration = document.getElementById('celebration');
@@ -65,12 +68,13 @@ function render() {
     stage.className = `activity activity-${type}`;
     const label = document.createElement('div');
     label.className = 'activity-label';
-    label.textContent = INSTRUCTIONS[type];
+    label.textContent = (type === 'parcours' && node.task) || INSTRUCTIONS[type];
     stage.appendChild(label);
+    const options = { hero: story.hero && getPuzzle(story.hero), course: node.course };
     cleanup = ACTIVITY_START[type](stage, picture, (madeColors) => {
       colors = madeColors;
       window.setTimeout(celebrate, REVEAL_DELAY[type]);
-    }) || null;
+    }, options) || null;
     return;
   }
 

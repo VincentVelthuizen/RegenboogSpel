@@ -94,7 +94,8 @@
 }
 
 .activity-dots,
-.activity-color {
+.activity-color,
+.activity-parcours {
   display: flex;
   flex-direction: column;
   padding: 10vh 3vw 3vh;
@@ -340,6 +341,68 @@
     gap: 5vw;
     padding: 10vh 4vw 4vh;
   }
+}
+
+/* Parcours */
+.parcours-board {
+  touch-action: none;
+}
+
+.parcours-board.oops {
+  animation: oops 400ms ease;
+}
+
+@keyframes oops {
+  20% { translate: -6px 0; }
+  40% { translate: 6px 0; }
+  60% { translate: -4px 0; }
+  80% { translate: 4px 0; }
+}
+
+.parcours-hero {
+  cursor: grab;
+}
+
+.parcours-hero.hop-back {
+  transition: transform 450ms cubic-bezier(0.3, 1.4, 0.6, 1);
+}
+
+.parcours-ring {
+  fill: rgba(255, 255, 255, 0.6);
+  stroke: #f59e0b;
+  stroke-width: 1.2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ring-pulse 1.2s ease-in-out infinite;
+}
+
+.parcours-hero.dragging .parcours-ring {
+  animation: none;
+  stroke: #22c55e;
+}
+
+@keyframes ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.18); opacity: 0.6; }
+}
+
+.parcours-flag {
+  fill: #f87171;
+  transition: fill 300ms ease;
+}
+
+.parcours-flag.passed {
+  fill: #22c55e;
+}
+
+.parcours-goal.reached {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: goal-pop 600ms ease;
+}
+
+@keyframes goal-pop {
+  50% { scale: 1.2; }
 }
 
 /* ---------- Story ---------- */
