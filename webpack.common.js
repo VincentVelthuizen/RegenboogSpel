@@ -9,6 +9,7 @@ module.exports = {
     sudoku: './js/sudoku/app.js',
     woordzoeker: './js/woordzoeker/app.js',
     jumbolino: './js/jumbolino/app.js',
+    avontuur: './js/avontuur/app.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -57,6 +58,12 @@ module.exports = {
       template: './jumbolino.html',
       filename: 'jumbolino.html',
       chunks: ['jumbolino'],
+    }),
+    // Avontuur (choose-your-own-adventure with drawing activities).
+    new HtmlWebpackPlugin({
+      template: './avontuur.html',
+      filename: 'avontuur.html',
+      chunks: ['avontuur'],
     }),
     // Babyshower hub menu — pure HTML/CSS, no bundle injected.
     new HtmlWebpackPlugin({

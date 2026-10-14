@@ -6,7 +6,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 6vw;
+  gap: min(6vw, 4vh);
   padding: 4vw;
   overflow-y: auto;
 }
@@ -15,8 +15,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(120px, 36vw, 280px);
-  height: clamp(120px, 36vw, 280px);
+  /* Sized so all cards fit on one screen: 2 per row standing up, 4 per row
+     lying down. */
+  --card: clamp(110px, min(36vw, 20vh), 280px);
+  width: var(--card);
+  height: var(--card);
   background: #fff;
   border: 2px solid #ddd;
   border-radius: 20%;
@@ -33,7 +36,7 @@
 }
 
 .menu-card__emoji {
-  font-size: clamp(4rem, 20vw, 9rem);
+  font-size: calc(var(--card) * 0.55);
   line-height: 1;
   display: flex;
   align-items: center;
@@ -41,6 +44,12 @@
 }
 
 .menu-card__svg {
-  width: clamp(4rem, 20vw, 9rem);
-  height: clamp(4rem, 20vw, 9rem);
+  width: calc(var(--card) * 0.55);
+  height: calc(var(--card) * 0.55);
+}
+
+@media (orientation: landscape) {
+  .menu-card {
+    --card: clamp(110px, min(19vw, 36vh), 280px);
+  }
 }
