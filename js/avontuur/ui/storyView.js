@@ -1,7 +1,7 @@
 import { getPuzzle } from '../../dots/game/puzzles.js';
 import { getNode, isEnding } from '../game/story.js';
 import { pictureBounds } from '../game/geometry.js';
-import { drawPicture, svgElement } from './picture.js';
+import { drawPicture, svgElement, pictureIcon } from '../../dots/ui/picture.js';
 
 function button(className, content, label, onClick) {
   const btn = document.createElement('button');
@@ -67,8 +67,9 @@ export function renderStory(container, story, node, colors, { onChoose, onRestar
     choices.appendChild(home);
   } else {
     node.choices.forEach((choice) => {
-      const emoji = getPuzzle(getNode(story, choice.next).picture).emoji;
-      choices.appendChild(button('choice-btn', [span('choice-emoji', emoji), span('choice-label', choice.label)],
+      const icon = span('choice-emoji', '');
+      icon.appendChild(pictureIcon(getPuzzle(getNode(story, choice.next).picture)));
+      choices.appendChild(button('choice-btn', [icon, span('choice-label', choice.label)],
         choice.label, () => onChoose(choice.next)));
     });
   }

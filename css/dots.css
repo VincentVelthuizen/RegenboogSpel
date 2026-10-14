@@ -296,3 +296,9 @@
 .starry .back-icon {
   stroke: #cfe0ff;
 }
+
+/* Picker tiles for pictures without a fitting emoji show the drawing. */
+.emoji-btn .picture-thumb {
+  width: 72%;
+  height: 72%;
+}

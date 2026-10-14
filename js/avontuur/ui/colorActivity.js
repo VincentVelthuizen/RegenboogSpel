@@ -1,6 +1,6 @@
 import { PALETTE, BODY, colorRegions, paint, isFullyColored } from '../game/coloring.js';
 import { pictureBounds } from '../game/geometry.js';
-import { drawPicture, svgElement } from './picture.js';
+import { drawPicture, svgElement } from '../../dots/ui/picture.js';
 
 // Colouring page: pick a colour from the palette, tap a region to fill it.
 // The ✓ button appears once the body is coloured (the rest is up to the

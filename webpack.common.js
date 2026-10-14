@@ -10,6 +10,7 @@ module.exports = {
     woordzoeker: './js/woordzoeker/app.js',
     jumbolino: './js/jumbolino/app.js',
     avontuur: './js/avontuur/app.js',
+    plaatjes: './js/plaatjes/app.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -64,6 +65,18 @@ module.exports = {
       template: './avontuur.html',
       filename: 'avontuur.html',
       chunks: ['avontuur'],
+    }),
+    // Kleurplaat, legpuzzel en schuifpuzzel (?spel=...), los van het verhaal.
+    new HtmlWebpackPlugin({
+      template: './plaatjes.html',
+      filename: 'plaatjes.html',
+      chunks: ['plaatjes'],
+    }),
+    // "Meer spellen": the games for older children — pure HTML/CSS.
+    new HtmlWebpackPlugin({
+      template: './meer.html',
+      filename: 'meer.html',
+      inject: false,
     }),
     // Babyshower hub menu — pure HTML/CSS, no bundle injected.
     new HtmlWebpackPlugin({

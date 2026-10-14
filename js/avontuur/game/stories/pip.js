@@ -1,5 +1,5 @@
 // "Het avontuur van Pip": Pip de poes gaat op avontuur, met de auto, de boot
-// of de ballon. Story format: see ../story.js.
+// of de luchtballon. Story format: see ../story.js.
 export const PIP = {
   id: 'pip',
   title: 'Pip de poes',
@@ -13,7 +13,7 @@ export const PIP = {
       choices: [
         { label: 'Met de auto', next: 'auto' },
         { label: 'Met de boot', next: 'boot' },
-        { label: 'Met de ballon', next: 'ballon' },
+        { label: 'Met de luchtballon', next: 'ballon' },
       ],
     },
 
@@ -35,8 +35,8 @@ export const PIP = {
       ],
     },
     {
-      id: 'ballon', picture: 'ballon',
-      text: 'Pip houdt een grote ballon vast. Wieee! Ze zweeft omhoog, hoog boven de huizen en de bomen. In de verte ziet ze twee dingen. Waar vliegt Pip naartoe?',
+      id: 'ballon', picture: 'luchtballon',
+      text: 'Pip klimt in het mandje van een grote luchtballon. Wieee! Ze zweeft omhoog, hoog boven de huizen en de bomen. In de verte ziet ze twee dingen. Waar vliegt Pip naartoe?',
       choices: [
         { label: 'Naar het kasteel', next: 'kasteel' },
         { label: 'Naar de raket', next: 'raket' },

@@ -1,23 +1,81 @@
-#menu {
+/* Home: the adventure as a big feature card, the small-children games
+   below it, and a quiet link to the games for older children. */
+#home,
+#more {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: min(6vw, 4vh);
-  padding: 4vw;
-  overflow-y: auto;
+  gap: min(5vh, 6vw);
+  padding: 4vh 4vw;
+}
+
+.feature-card {
+  width: min(88vw, 640px);
+  height: clamp(130px, 26vh, 260px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  font-size: clamp(2rem, min(9vw, 9vh), 4.2rem);
+  font-weight: 800;
+  color: #7c3a10;
+  text-decoration: none;
+  background: linear-gradient(120deg, #fde68a 0%, #fdba74 35%, #f9a8d4 70%, #c4b5fd 100%);
+  border: 3px solid #fff;
+  border-radius: 28px;
+  box-shadow: 0 6px 0 #e2a96b, 0 10px 24px rgba(124, 58, 16, 0.18);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  animation: feature-float 3s ease-in-out infinite;
+}
+
+.feature-card:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #e2a96b;
+  animation: none;
+}
+
+@keyframes feature-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+.feature-card__emoji {
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+.home-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: min(4vw, 3vh);
+}
+
+.more-link {
+  color: #999;
+  font-size: clamp(0.95rem, 2.6vmin, 1.2rem);
+  text-decoration: none;
+  padding: 0.6em 1.2em;
+  border-radius: 999px;
+  border: 2px solid #e5e5e5;
+  background: #fff;
+}
+
+.more-title {
+  font-size: clamp(1.6rem, 6vmin, 2.6rem);
+  color: #666;
 }
 
 .menu-card {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Sized so all cards fit on one screen: 2 per row standing up, 4 per row
-     lying down. */
-  --card: clamp(110px, min(36vw, 20vh), 280px);
+  /* Sized so all cards fit on one screen: 3 per row standing up, a single
+     row lying down. */
+  --card: clamp(88px, min(27vw, 17vh), 220px);
   width: var(--card);
   height: var(--card);
   background: #fff;
@@ -50,6 +108,6 @@
 
 @media (orientation: landscape) {
   .menu-card {
-    --card: clamp(110px, min(19vw, 36vh), 280px);
+    --card: clamp(88px, min(15vw, 30vh), 220px);
   }
 }

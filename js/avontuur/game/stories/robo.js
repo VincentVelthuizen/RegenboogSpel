@@ -13,7 +13,7 @@ export const ROBO = {
       text: 'Dit is Robo, een vrolijke robot. Op een avond hoort hij een plof in de tuin. In het gras ligt een kleine ster! "Ik ben uit de lucht gevallen," snikt ze. "Wil jij me terugbrengen?" Natuurlijk wil Robo dat. Maar hoe?',
       choices: [
         { label: 'Met een raket', next: 'raket' },
-        { label: 'Met een ballon', next: 'ballon' },
+        { label: 'Met een luchtballon', next: 'ballon' },
         { label: 'Hulp vragen in het kasteel', next: 'kasteel' },
       ],
     },
@@ -28,8 +28,8 @@ export const ROBO = {
       ],
     },
     {
-      id: 'ballon', picture: 'ballon',
-      text: 'Robo blaast een enorme ballon op. Hij houdt de ster stevig vast en ze zweven langzaam omhoog. Maar oei, de wind blaast ze naar het bos! Waar komen ze terecht?',
+      id: 'ballon', picture: 'luchtballon',
+      text: 'Robo vindt een grote luchtballon. Hij zet de ster voorzichtig in het mandje en stapt erbij. Langzaam zweven ze omhoog. Maar oei, de wind blaast ze naar het bos! Waar komen ze terecht?',
       choices: [
         { label: 'In een hoge boom', next: 'boom' },
         { label: 'In een bloemenveld', next: 'tulp' },

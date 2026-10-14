@@ -1,4 +1,5 @@
 import { STAR_LEVEL } from '../game/constellations.js';
+import { pictureIcon } from './picture.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -100,7 +101,7 @@ export function renderPuzzlePicker(puzzles, onSelect, onBack) {
     const btn = document.createElement('button');
     btn.className = 'emoji-btn';
     btn.type = 'button';
-    btn.textContent = puzzle.emoji;
+    btn.appendChild(pictureIcon(puzzle));
     btn.setAttribute('aria-label', puzzle.label);
     btn.addEventListener('click', () => onSelect(puzzle.id));
     container.appendChild(btn);

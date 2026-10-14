@@ -52,3 +52,11 @@ describe('shape helpers', () => {
     expect(mirrorX([[50, 0], [40, 10], [50, 20]])).toEqual([[50, 0], [40, 10], [50, 20], [60, 10]]);
   });
 });
+
+describe('pictures shown as a drawing instead of an emoji', () => {
+  it('includes the hot air balloon, which has no emoji of its own', () => {
+    const luchtballon = PUZZLES.find((p) => p.id === 'luchtballon');
+    expect(luchtballon.thumbnail).toBe(true);
+    expect(luchtballon.level).toBe(2);
+  });
+});

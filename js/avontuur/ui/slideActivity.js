@@ -1,7 +1,7 @@
 import { pictureBounds } from '../game/geometry.js';
 import { makePieces } from '../game/jigsaw.js';
 import { SLIDE_GRID, scramble, move, canMove, isSolved } from '../game/slide.js';
-import { drawPicture, svgElement } from './picture.js';
+import { drawPicture, svgElement } from '../../dots/ui/picture.js';
 
 // Sliding puzzle: tap a tile next to the empty spot to slide it there. A
 // small picture alongside shows what it should become. When solved, the

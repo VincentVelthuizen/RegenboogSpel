@@ -1,6 +1,6 @@
 import { pictureBounds } from '../game/geometry.js';
 import { gridFor, makePieces, shuffled, fitsCell, isSolved } from '../game/jigsaw.js';
-import { drawPicture, svgElement } from './picture.js';
+import { drawPicture, svgElement } from '../../dots/ui/picture.js';
 
 const GAP = 10;
 

@@ -1,6 +1,6 @@
 import { bindBoard, renderBoard, revealPicture } from '../../dots/ui/board.js';
 import { recordDotTap } from '../../dots/game/state.js';
-import { svgElement } from './picture.js';
+import { svgElement } from '../../dots/ui/picture.js';
 
 // Connect-the-dots, exactly like the dots game (same board + reveal).
 export function startDotsActivity(container, picture, onDone) {

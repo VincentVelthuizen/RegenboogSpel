@@ -1,4 +1,5 @@
-import { BODY, detailRegion, isColorable } from '../game/coloring.js';
+import { BODY, detailRegion, isColorable } from '../../avontuur/game/coloring.js';
+import { pictureBounds } from '../../avontuur/game/geometry.js';
 
 export const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -49,4 +50,20 @@ export function drawPicture(target, picture, colors = null) {
     }
     target.appendChild(el);
   });
+}
+
+// The finished drawing as a small picture, framed tightly.
+export function pictureThumbnail(picture) {
+  const box = pictureBounds(picture);
+  const svg = svgElement('svg', { viewBox: `${box.x} ${box.y} ${box.width} ${box.height}`, preserveAspectRatio: 'xMidYMid meet' });
+  svg.classList.add('picture-thumb');
+  svg.setAttribute('aria-hidden', 'true');
+  drawPicture(svg, picture);
+  return svg;
+}
+
+// What a button shows for a picture: its emoji, or — for pictures without a
+// fitting emoji (`thumbnail: true`, like the hot air balloon) — the drawing.
+export function pictureIcon(picture) {
+  return picture.thumbnail ? pictureThumbnail(picture) : document.createTextNode(picture.emoji);
 }
