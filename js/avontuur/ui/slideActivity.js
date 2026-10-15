@@ -2,6 +2,7 @@ import { pictureBounds } from '../game/geometry.js';
 import { makePieces } from '../game/jigsaw.js';
 import { SLIDE_GRID, scramble, move, canMove, isSolved } from '../game/slide.js';
 import { drawPicture, svgElement } from '../../dots/ui/picture.js';
+import { topReserved } from './puzzleActivity.js';
 
 // Sliding puzzle: tap a tile next to the empty spot to slide it there. A
 // small picture alongside shows what it should become. When solved, the
@@ -75,7 +76,8 @@ export function startSlideActivity(container, picture, onDone) {
     const H = container.clientHeight;
     const landscape = W > H;
     const aspect = box.width / box.height;
-    const area = landscape ? { w: W * 0.58, h: H * 0.8 } : { w: W * 0.9, h: H * 0.6 };
+    const top = Math.max(H * 0.09, topReserved(container));
+    const area = landscape ? { w: W * 0.58, h: H * 0.96 - top } : { w: W * 0.9, h: H * 0.72 - top };
     let bw = area.w;
     let bh = bw / aspect;
     if (bh > area.h) { bh = area.h; bw = bh * aspect; }

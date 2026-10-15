@@ -11,7 +11,7 @@ export const BRUNO = {
   nodes: [
     {
       id: 'start', picture: 'beer',
-      text: 'Dit is Bruno, een grote bruine beer met een rode sjaal. Vanochtend vond hij een brief: "Kom je op mijn verjaardagsfeest? Groetjes, Uil." Uil woont aan de andere kant van het bos. Bruno wil een cadeautje meenemen. Wat gaat hij halen?',
+      text: 'Dit is Bruno, een grote {body|bruine} beer met een {d5|rode} sjaal. Vanochtend vond hij een brief: "Kom je op mijn verjaardagsfeest? Groetjes, Uil." Uil woont aan de andere kant van het bos. Bruno wil een cadeautje meenemen. Wat gaat hij halen?',
       choices: [
         { label: 'Mooie bloemen', next: 'tulp' },
         { label: 'Lekkere appels', next: 'appel' },
@@ -64,7 +64,7 @@ export const BRUNO = {
     },
     {
       id: 'brug', picture: 'brug',
-      text: 'Over de rivier ligt een stenen brug. Bruno loopt voorzichtig naar de overkant, met zijn cadeautje stevig vast. Onder de brug springt een vis. Hallo vis! Aan de overkant hoort Bruno muziek. Wat is daar?',
+      text: 'Over de rivier ligt een stenen brug. Bruno loopt voorzichtig naar de overkant, met zijn cadeautje stevig vast. Zijn {beer.d5|rode} sjaal wappert in de wind. Onder de brug springt een vis. Hallo vis! Aan de overkant hoort Bruno muziek. Wat is daar?',
       choices: [
         { label: 'Een feest met ballonnen', next: 'ballonnen' },
         { label: 'Uil staat te wachten', next: 'knuffel' },
@@ -74,7 +74,7 @@ export const BRUNO = {
     // ---- Eindes
     {
       id: 'taart', picture: 'taart',
-      text: '"Verrassing!" roepen alle dieren als Bruno binnenkomt. Op tafel staat een enorme taart met een kaarsje. Uil blaast het uit en Bruno geeft zijn cadeautje. "Wat lief van je, Bruno!"',
+      text: '"Verrassing!" roepen alle dieren als Bruno binnenkomt. Op tafel staat een enorme taart met een kaarsje. Uil blaast het uit en Bruno geeft zijn cadeautje. "Wat lief van je, Bruno! En wat een mooie {beer.d5|rode} sjaal!"',
       choices: [],
     },
     {

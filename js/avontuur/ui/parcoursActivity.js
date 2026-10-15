@@ -44,14 +44,15 @@ const DRAW = {
   },
 };
 
-// A drawing (cartoon picture) as a nested <svg> of `size`, centred on (0, 0).
-function pictureAt(picture, size) {
+// A drawing (cartoon picture) as a nested <svg> of `size`, centred on (0, 0),
+// optionally in the colours the child gave it.
+function pictureAt(picture, size, colors = null) {
   const box = pictureBounds(picture);
   const svg = svgElement('svg', {
     x: -size / 2, y: -size / 2, width: size, height: size,
     viewBox: `${box.x} ${box.y} ${box.width} ${box.height}`, preserveAspectRatio: 'xMidYMid meet',
   });
-  drawPicture(svg, picture);
+  drawPicture(svg, picture, colors, { page: false });
   return svg;
 }
 
@@ -62,7 +63,7 @@ function polyline(points, attrs) {
 // Parcours: drag the hero along the winding path to the goal (the step's
 // picture). Off the path, the hero hops back to the last flag passed.
 // Returns a cleanup function.
-export function startParcoursActivity(container, picture, onDone, { hero, course: courseId } = {}) {
+export function startParcoursActivity(container, picture, onDone, { hero, heroColors = null, course: courseId } = {}) {
   const spec = COURSES[courseId] || COURSES.wei;
   const course = buildCourse(spec);
   let progress = startProgress();
@@ -111,7 +112,7 @@ export function startParcoursActivity(container, picture, onDone, { hero, course
   const ring = svgElement('circle', { cx: 0, cy: 0, r: HERO_SIZE / 2 + 1.5 });
   ring.classList.add('parcours-ring');
   heroEl.appendChild(ring);
-  if (hero) heroEl.appendChild(pictureAt(hero, HERO_SIZE));
+  if (hero) heroEl.appendChild(pictureAt(hero, HERO_SIZE, heroColors));
   board.appendChild(heroEl);
 
   function render() {

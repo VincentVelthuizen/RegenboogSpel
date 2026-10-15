@@ -1,12 +1,15 @@
 import { getPuzzle } from '../dots/game/puzzles.js';
 import { STORIES, getStory, getNode } from './game/story.js';
-import { createAdventure, pickStory, finishActivity, choose, activityFor } from './game/state.js';
+import {
+  createAdventure, pickStory, finishActivity, choose, revisit, activityFor, colorsByPicture,
+} from './game/state.js';
 import { startDotsActivity } from './ui/dotsActivity.js';
 import { startColorActivity } from './ui/colorActivity.js';
 import { startPuzzleActivity } from './ui/puzzleActivity.js';
 import { startSlideActivity } from './ui/slideActivity.js';
 import { startParcoursActivity } from './ui/parcoursActivity.js';
 import { renderStory, renderStoryPicker } from './ui/storyView.js';
+import { renderTrail } from './ui/trail.js';
 
 const PALETTE = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6'];
 const CONFETTI_COUNT = 40;
@@ -33,11 +36,16 @@ const REVEAL_DELAY = { dots: 900, color: 0, puzzle: 600, slide: 800, parcours: 7
 const stage = document.getElementById('stage');
 const celebration = document.getElementById('celebration');
 let state = createAdventure();
-// Colours of the step's colouring page, so the story shows the child's own picture.
-let colors = null;
 let cleanup = null;
+// What the activity just finished produced (colours of a colouring page).
+let finished = null;
+
+// Bumped whenever the screen changes, so a celebration that was still
+// pending for an activity the child left (via the steps bar) is dropped.
+let screen = 0;
 
 function clearStage() {
+  screen += 1;
   if (cleanup) cleanup();
   cleanup = null;
   stage.innerHTML = '';
@@ -47,7 +55,11 @@ function clearStage() {
 
 function start(storyId) {
   state = pickStory(state, storyId);
-  colors = null;
+  render();
+}
+
+function visit(step) {
+  state = revisit(state, step);
   render();
 }
 
@@ -61,25 +73,31 @@ function render() {
 
   const story = getStory(state.storyId);
   const node = getNode(story, state.nodeId);
+  renderTrail(stage, story, state, visit);
 
   if (state.phase === 'activity') {
     const picture = getPuzzle(node.picture);
     const type = activityFor(story, state.step, picture);
-    stage.className = `activity activity-${type}`;
+    stage.classList.add('activity', `activity-${type}`);
     const label = document.createElement('div');
     label.className = 'activity-label';
     label.textContent = (type === 'parcours' && node.task) || INSTRUCTIONS[type];
     stage.appendChild(label);
-    const options = { hero: story.hero && getPuzzle(story.hero), course: node.course };
+    const options = {
+      hero: story.hero && getPuzzle(story.hero),
+      heroColors: colorsByPicture(state)[story.hero] || null,
+      course: node.course,
+    };
+    const thisScreen = screen;
     cleanup = ACTIVITY_START[type](stage, picture, (madeColors) => {
-      colors = madeColors;
-      window.setTimeout(celebrate, REVEAL_DELAY[type]);
+      finished = madeColors || null;
+      window.setTimeout(() => { if (screen === thisScreen) celebrate(); }, REVEAL_DELAY[type]);
     }, options) || null;
     return;
   }
 
-  renderStory(stage, story, node, colors, {
-    onChoose: (next) => { state = choose(state, next); colors = null; render(); },
+  renderStory(stage, story, node, state.made[state.step], colorsByPicture(state), {
+    onChoose: (next) => { state = choose(state, next); render(); },
     onRestart: () => start(state.storyId),
     onStories: () => { state = createAdventure(); render(); },
   });
@@ -103,7 +121,8 @@ function celebrate() {
 }
 
 celebration.addEventListener('click', () => {
-  state = finishActivity(state);
+  state = finishActivity(state, finished);
+  finished = null;
   render();
 });
 

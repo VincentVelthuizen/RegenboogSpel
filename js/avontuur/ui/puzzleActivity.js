@@ -4,6 +4,14 @@ import { drawPicture, svgElement } from '../../dots/ui/picture.js';
 
 const GAP = 10;
 
+// How far down the instruction (and steps bar) above an activity reach.
+export function topReserved(container) {
+  const origin = container.getBoundingClientRect().top;
+  const bottoms = [...container.querySelectorAll(':scope > .activity-label, :scope > .trail')]
+    .map((el) => el.getBoundingClientRect().bottom - origin);
+  return bottoms.length ? Math.max(...bottoms) + 12 : 0;
+}
+
 // Jigsaw: the picture's pieces lie shuffled in a tray. Tap a piece and then
 // its spot on the board, or drag it there. A piece on its own cell snaps
 // into place; dropped anywhere else it slides back to the tray. A faint ghost of the picture on the board helps.
@@ -43,11 +51,12 @@ export function startPuzzleActivity(container, picture, onDone) {
     const H = container.clientHeight;
     const landscape = W > H;
     const aspect = box.width / box.height;
+    const top = Math.max(H * 0.11, topReserved(container));
     const area = landscape
-      ? { x: W * 0.04, y: H * 0.12, w: W * 0.5, h: H * 0.82 }
-      : { x: W * 0.05, y: H * 0.11, w: W * 0.9, h: H * 0.46 };
+      ? { x: W * 0.04, y: top, w: W * 0.5, h: H * 0.95 - top }
+      : { x: W * 0.05, y: top, w: W * 0.9, h: H * 0.57 - top };
     const tray = landscape
-      ? { x: W * 0.58, y: H * 0.12, w: W * 0.38, h: H * 0.82 }
+      ? { x: W * 0.58, y: top, w: W * 0.38, h: H * 0.95 - top }
       : { x: W * 0.05, y: H * 0.6, w: W * 0.9, h: H * 0.37 };
 
     let bw = area.w;

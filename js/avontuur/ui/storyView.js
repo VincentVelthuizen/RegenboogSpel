@@ -2,6 +2,7 @@ import { getPuzzle } from '../../dots/game/puzzles.js';
 import { getNode, isEnding } from '../game/story.js';
 import { pictureBounds } from '../game/geometry.js';
 import { drawPicture, svgElement, pictureIcon } from '../../dots/ui/picture.js';
+import { fillColorWords } from '../game/colorWords.js';
 
 function button(className, content, label, onClick) {
   const btn = document.createElement('button');
@@ -30,9 +31,9 @@ function audioButton(src) {
 }
 
 // The story step: the picture the child just made (in their colours), the
-// text to read aloud, and the choices — or, at an ending, "again" /
-// "another story" / "home".
-export function renderStory(container, story, node, colors, { onChoose, onRestart, onStories }) {
+// text to read aloud — mentioning the colours the child chose — and the
+// choices, or, at an ending, "again" / "another story" / "home".
+export function renderStory(container, story, node, colors, colorsByPicture, { onChoose, onRestart, onStories }) {
   const view = document.createElement('div');
   view.className = 'story';
 
@@ -47,7 +48,7 @@ export function renderStory(container, story, node, colors, { onChoose, onRestar
   side.className = 'story-side';
   const text = document.createElement('p');
   text.className = 'story-text';
-  text.textContent = node.text;
+  text.textContent = fillColorWords(node.text, colorsByPicture, node.picture);
   side.appendChild(text);
   if (node.audio) side.appendChild(audioButton(node.audio));
 

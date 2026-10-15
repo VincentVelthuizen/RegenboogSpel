@@ -10,7 +10,7 @@ export const ROBO = {
   nodes: [
     {
       id: 'start', picture: 'robot',
-      text: 'Dit is Robo, een vrolijke robot. Op een avond hoort hij een plof in de tuin. In het gras ligt een kleine ster! "Ik ben uit de lucht gevallen," snikt ze. "Wil jij me terugbrengen?" Natuurlijk wil Robo dat. Maar hoe?',
+      text: 'Dit is Robo, een vrolijke {body|grijze} robot met {d3|blauwe} ogen. Op een avond hoort hij een plof in de tuin. In het gras ligt een kleine ster! "Ik ben uit de lucht gevallen," snikt ze. "Wil jij me terugbrengen?" Natuurlijk wil Robo dat. Maar hoe?',
       choices: [
         { label: 'Met een raket', next: 'raket' },
         { label: 'Met een luchtballon', next: 'ballon' },
@@ -97,7 +97,7 @@ export const ROBO = {
     // ---- Eindes
     {
       id: 'hemel', picture: 'ster',
-      text: 'Hoger en hoger gaan ze, tot ze bij de hemel zijn. Daar is precies één leeg plekje tussen de andere sterren. Plop! De ster springt erin en straalt weer. "Dank je wel, Robo!" Elke nacht knipoogt ze nu naar hem.',
+      text: 'Hoger en hoger gaan ze, tot ze bij de hemel zijn. Daar is precies één leeg plekje tussen de andere sterren. Plop! De ster springt erin en straalt weer. "Dank je wel, Robo!" Elke nacht knipoogt ze nu naar de {robot.body|grijze} robot beneden.',
       choices: [],
     },
     {

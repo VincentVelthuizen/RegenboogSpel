@@ -20,7 +20,7 @@ export const PIP = {
     // ---- Hoe gaat Pip op pad?
     {
       id: 'auto', picture: 'auto',
-      text: 'Vroem vroem! Pip rijdt in haar auto over de weg, langs weilanden en bomen. Bij een groot bos stopt ze. Tussen de bomen beweegt iets… Wat is het?',
+      text: 'Vroem vroem! Pip rijdt in haar {body|rode} auto over de weg, langs weilanden en bomen. Bij een groot bos stopt ze. Tussen de bomen beweegt iets… Wat is het?',
       choices: [
         { label: 'Iets dat fladdert', next: 'vlinder' },
         { label: 'Iets dat kruipt', next: 'schildpad' },
@@ -28,7 +28,7 @@ export const PIP = {
     },
     {
       id: 'boot', picture: 'boot',
-      text: 'Pip stapt in een bootje met een groot zeil. De wind blaast en het bootje vaart de zee op. Plons! Naast de boot zwemt iets… Wat is het?',
+      text: 'Pip stapt in een bootje met {d0|witte} zeilen. De wind blaast en het bootje vaart de zee op. Plons! Naast de boot zwemt iets… Wat is het?',
       choices: [
         { label: 'Iets met vinnen', next: 'vis' },
         { label: 'Iets met acht armen', next: 'octopus' },
@@ -36,7 +36,7 @@ export const PIP = {
     },
     {
       id: 'ballon', picture: 'luchtballon',
-      text: 'Pip klimt in het mandje van een grote luchtballon. Wieee! Ze zweeft omhoog, hoog boven de huizen en de bomen. In de verte ziet ze twee dingen. Waar vliegt Pip naartoe?',
+      text: 'Pip klimt in het mandje van een grote {body|rode} luchtballon. Wieee! Ze zweeft omhoog, hoog boven de huizen en de bomen. In de verte ziet ze twee dingen. Waar vliegt Pip naartoe?',
       choices: [
         { label: 'Naar het kasteel', next: 'kasteel' },
         { label: 'Naar de raket', next: 'raket' },
@@ -46,7 +46,7 @@ export const PIP = {
     // ---- Wie komt Pip tegen?
     {
       id: 'vlinder', picture: 'vlinder',
-      text: 'Een prachtige vlinder fladdert om Pip heen. "Hallo Pip, ik ben Fleur!" zegt de vlinder. "Ik weet twee geheime plekjes in het bos. Welke wil je zien?"',
+      text: 'Pip stapt uit haar {auto.body|rode} auto. Een prachtige vlinder fladdert om haar heen. "Hallo Pip, ik ben Fleur!" zegt de vlinder. "Ik weet twee geheime plekjes in het bos. Welke wil je zien?"',
       choices: [
         { label: 'De bloemenwei', next: 'tulp' },
         { label: 'De grote boom', next: 'boom' },
@@ -78,7 +78,7 @@ export const PIP = {
     },
     {
       id: 'kasteel', picture: 'kasteel',
-      text: 'Pip landt zachtjes bij een groot kasteel met rode torens. Krrr… de poort gaat langzaam open. Wie woont er in het kasteel?',
+      text: 'Pip landt met haar {luchtballon.body|rode} luchtballon zachtjes bij een groot kasteel met rode torens. Krrr… de poort gaat langzaam open. Wie woont er in het kasteel?',
       choices: [
         { label: 'Een robot', next: 'robot' },
         { label: 'Een olifant', next: 'olifant' },
@@ -86,7 +86,7 @@ export const PIP = {
     },
     {
       id: 'raket', picture: 'raket',
-      text: 'Pip klimt in een glimmende raket. Drie… twee… één… lancering! De raket vliegt omhoog, door de wolken, de ruimte in. Waar gaat Pip heen?',
+      text: 'Pip klimt uit het mandje van haar {luchtballon.body|rode} luchtballon en in een glimmende raket. Drie… twee… één… lancering! De raket vliegt omhoog, door de wolken, de ruimte in. Waar gaat Pip heen?',
       choices: [
         { label: 'Naar de sterren', next: 'ster' },
         { label: 'Naar de robotplaneet', next: 'robot' },
@@ -121,7 +121,7 @@ export const PIP = {
     },
     {
       id: 'cactus', picture: 'cactus',
-      text: 'Op het eiland staat een grote cactus met een roze bloem. Pip en Bubbel spelen verstoppertje op het warme strand, tot de zon rood wordt en ondergaat.',
+      text: 'Op het eiland staat een grote {body|groene} cactus met een roze bloem. Pip en Bubbel spelen verstoppertje op het warme strand, tot de zon rood wordt en ondergaat.',
       choices: [],
     },
     {
@@ -136,7 +136,7 @@ export const PIP = {
     },
     {
       id: 'robot', picture: 'robot',
-      text: 'Bliep bloep! Een vriendelijke robot zegt hallo. Hij laat Pip al zijn knopjes en lampjes zien. Samen maken ze de gekste muziek: piep, toet, bliep!',
+      text: 'Bliep bloep! Een vriendelijke {body|grijze} robot zegt hallo. Hij laat Pip al zijn knopjes en lampjes zien. Samen maken ze de gekste muziek: piep, toet, bliep!',
       choices: [],
     },
     {
