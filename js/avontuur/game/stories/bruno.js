@@ -64,7 +64,7 @@ export const BRUNO = {
     },
     {
       id: 'brug', picture: 'brug',
-      text: 'Over de rivier ligt een stenen brug. Bruno loopt voorzichtig naar de overkant, met zijn cadeautje stevig vast. Zijn {beer.d5|rode} sjaal wappert in de wind. Onder de brug springt een vis. Hallo vis! Aan de overkant hoort Bruno muziek. Wat is daar?',
+      text: 'Over de rivier ligt een stenen brug. Bruno loopt voorzichtig naar de overkant, met zijn cadeautje stevig in zijn armen. Zijn {beer.d5|rode} sjaal wappert in de wind. Onder de brug springt een vis. Hallo vis! Aan de overkant hoort Bruno muziek. Wat is daar?',
       choices: [
         { label: 'Een feest met ballonnen', next: 'ballonnen' },
         { label: 'Uil staat te wachten', next: 'knuffel' },
@@ -74,7 +74,7 @@ export const BRUNO = {
     // ---- Eindes
     {
       id: 'taart', picture: 'taart',
-      text: '"Verrassing!" roepen alle dieren als Bruno binnenkomt. Op tafel staat een enorme taart met een kaarsje. Uil blaast het uit en Bruno geeft zijn cadeautje. "Wat lief van je, Bruno! En wat een mooie {beer.d5|rode} sjaal!"',
+      text: '"Hoera, daar is Bruno!" roepen alle dieren als hij binnenkomt. Op tafel staat een enorme taart met een kaarsje. Uil blaast het uit en Bruno geeft zijn cadeautje. "Wat lief van je, Bruno! En wat een mooie {beer.d5|rode} sjaal!"',
       choices: [],
     },
     {

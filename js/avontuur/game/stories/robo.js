@@ -29,7 +29,7 @@ export const ROBO = {
     },
     {
       id: 'ballon', picture: 'luchtballon',
-      text: 'Robo vindt een grote luchtballon. Hij zet de ster voorzichtig in het mandje en stapt erbij. Langzaam zweven ze omhoog. Maar oei, de wind blaast ze naar het bos! Waar komen ze terecht?',
+      text: 'Robo vindt een grote luchtballon. Hij zet de ster voorzichtig in het mandje en stapt zelf ook in. Langzaam zweven ze omhoog. Maar oei, de wind blaast ze naar het bos! Waar komen ze terecht?',
       choices: [
         { label: 'In een hoge boom', next: 'boom' },
         { label: 'In een bloemenveld', next: 'tulp' },
@@ -47,7 +47,7 @@ export const ROBO = {
     // ---- Onderweg
     {
       id: 'boot', picture: 'boot',
-      text: 'Op zee dobbert een bootje. De visser zwaait. "Ik ken de weg naar de hemel," zegt hij. "Volg de heldere sterren maar." Robo bedankt de visser. Wat doen ze nu?',
+      text: 'Robo landt de raket naast een bootje op zee. De visser in het bootje zwaait. "Ik ken de weg naar de hemel," zegt hij. "Volg de heldere sterren maar." Robo bedankt de visser. Wat doen ze nu?',
       choices: [
         { label: 'Verder naar de hemel', next: 'hemel' },
         { label: 'Eerst samen vissen', next: 'vrienden' },
@@ -79,7 +79,7 @@ export const ROBO = {
     },
     {
       id: 'auto', picture: 'auto',
-      text: 'De koning geeft Robo de sleutels van zijn snelle auto. Vroem! Ze rijden de hoogste berg op, helemaal tot bij de wolken. Wat zien ze daar boven op de top?',
+      text: 'De koning geeft Robo de sleutels van zijn snelle auto. Vroem! Ze rijden de hoogste berg op, helemaal tot bij de wolken. Wat zien ze daar, boven op de top?',
       choices: [
         { label: 'De hemel vol sterren', next: 'hemel' },
         { label: 'Een boom zonder piek', next: 'kerstboom' },

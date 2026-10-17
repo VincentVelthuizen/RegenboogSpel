@@ -28,7 +28,7 @@ export const PIP = {
     },
     {
       id: 'boot', picture: 'boot',
-      text: 'Pip stapt in een bootje met {d0|witte} zeilen. De wind blaast en het bootje vaart de zee op. Plons! Naast de boot zwemt iets… Wat is het?',
+      text: 'Pip stapt in een bootje met {d0|witte} zeilen. De wind blaast en het bootje vaart de zee op. Plons! Naast het bootje zwemt iets… Wat is het?',
       choices: [
         { label: 'Iets met vinnen', next: 'vis' },
         { label: 'Iets met acht armen', next: 'octopus' },
@@ -36,7 +36,7 @@ export const PIP = {
     },
     {
       id: 'ballon', picture: 'luchtballon',
-      text: 'Pip klimt in het mandje van een grote {body|rode} luchtballon. Wieee! Ze zweeft omhoog, hoog boven de huizen en de bomen. In de verte ziet ze twee dingen. Waar vliegt Pip naartoe?',
+      text: 'Pip klimt in het mandje van een grote {body|rode} luchtballon. Wieee! Ze zweeft omhoog, hoog boven de huizen en de bomen. In de verte ziet ze een kasteel en een glimmende raket. Waar vliegt Pip naartoe?',
       choices: [
         { label: 'Naar het kasteel', next: 'kasteel' },
         { label: 'Naar de raket', next: 'raket' },
@@ -54,7 +54,7 @@ export const PIP = {
     },
     {
       id: 'schildpad', picture: 'schildpad',
-      text: 'Op het pad kruipt een schildpad. Heel, heel langzaam. "Hallo, ik ben Sam," zegt hij. "Ik heb zo\'n honger, en mijn huis is nog zo ver weg." Hoe helpt Pip Sam?',
+      text: 'Op het pad kruipt een schildpad. Heel, heel langzaam. "Hallo, ik ben Sam," zegt hij. "Ik heb zo\'n honger, en mijn huis is nog zo ver weg." Hoe kan Pip Sam helpen?',
       choices: [
         { label: 'Eten zoeken', next: 'appel' },
         { label: 'Sam thuisbrengen', next: 'huis' },
@@ -86,7 +86,7 @@ export const PIP = {
     },
     {
       id: 'raket', picture: 'raket',
-      text: 'Pip klimt uit het mandje van haar {luchtballon.body|rode} luchtballon en in een glimmende raket. Drie… twee… één… lancering! De raket vliegt omhoog, door de wolken, de ruimte in. Waar gaat Pip heen?',
+      text: 'Pip landt met haar {luchtballon.body|rode} luchtballon naast een glimmende raket en klimt erin. Drie… twee… één… lancering! De raket vliegt omhoog, door de wolken, de ruimte in. Waar gaat Pip heen?',
       choices: [
         { label: 'Naar de sterren', next: 'ster' },
         { label: 'Naar de robotplaneet', next: 'robot' },
@@ -111,7 +111,7 @@ export const PIP = {
     },
     {
       id: 'huis', picture: 'huis-2',
-      text: 'Pip tilt Sam voorzichtig op en draagt hem naar huis. Wat gaat dat snel! Sam mag in Pips tuin komen wonen. Vanaf nu spelen ze elke dag samen.',
+      text: 'Pip tilt Sam voorzichtig op en zet hem naast zich in de auto. Vroem! Zo zijn ze er in een wip. Sam woont in een knus huisje aan de rand van het bos. "Kom je morgen weer spelen?" vraagt hij. Natuurlijk wil Pip dat!',
       choices: [],
     },
     {
@@ -126,7 +126,7 @@ export const PIP = {
     },
     {
       id: 'ruit', picture: 'ruit',
-      text: 'Otje laat de schat zien: een glinsterende blauwe diamant! "Hij is voor jou, Pip," zegt Otje. "Omdat je mijn vriendje bent." Wat een cadeau!',
+      text: 'Otje laat de schat zien: een glinsterende blauwe diamant! "Hij is voor jou, Pip," zegt Otje. "Omdat je mijn vriendinnetje bent." Wat een cadeau!',
       choices: [],
     },
     {

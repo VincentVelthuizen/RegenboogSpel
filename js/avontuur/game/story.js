@@ -1,7 +1,7 @@
 import { PIP } from './stories/pip.js';
 import { ROBO } from './stories/robo.js';
 import { BRUNO } from './stories/bruno.js';
-import { NOOR } from './stories/noor.js';
+import { SAAR } from './stories/saar.js';
 
 // Branching picture stories. Every node is one step of an adventure: first
 // the child makes the node's `picture` (one of the cartoon drawings of the
@@ -20,7 +20,7 @@ import { NOOR } from './stories/noor.js';
 // the build). When present, the story screen shows a play button.
 //
 // Line breaks (\n) in a text are kept, e.g. for the lines of a verse.
-export const STORIES = [PIP, ROBO, BRUNO, NOOR].map((story) => ({
+export const STORIES = [PIP, ROBO, BRUNO, SAAR].map((story) => ({
   ...story,
   nodes: Object.fromEntries(story.nodes.map((node) => [node.id, node])),
 }));
