@@ -75,3 +75,28 @@ describe.each(STORIES.map((s) => [s.id, s]))('story %s', (_, story) => {
     expect(nodes.filter(isEnding).length).toBeGreaterThanOrEqual(4);
   });
 });
+
+describe('the rhyming story of Noor and Mo', () => {
+  const noor = getStory('noor');
+
+  it('tells every step as a verse of four lines', () => {
+    for (const node of Object.values(noor.nodes)) {
+      expect(node.text.split('\n'), node.id).toHaveLength(4);
+    }
+  });
+
+  it('goes through the kitchen, getting dressed and a present', () => {
+    const kitchen = ['taart', 'koekjes', 'appels'];
+    const clothes = ['jurk', 'trui'];
+    const walk = (id, path) => {
+      const node = getNode(noor, id);
+      if (isEnding(node)) {
+        expect(path.some((n) => kitchen.includes(n)), path.join(' → ')).toBe(true);
+        expect(path.some((n) => clothes.includes(n)), path.join(' → ')).toBe(true);
+        return;
+      }
+      node.choices.forEach((c) => walk(c.next, [...path, c.next]));
+    };
+    walk(noor.start, [noor.start]);
+  });
+});

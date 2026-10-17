@@ -1,6 +1,7 @@
 import { PIP } from './stories/pip.js';
 import { ROBO } from './stories/robo.js';
 import { BRUNO } from './stories/bruno.js';
+import { NOOR } from './stories/noor.js';
 
 // Branching picture stories. Every node is one step of an adventure: first
 // the child makes the node's `picture` (one of the cartoon drawings of the
@@ -17,7 +18,9 @@ import { BRUNO } from './stories/bruno.js';
 // `audio` (optional, per node): path to a recorded fragment of the text, for
 // example 'audio/avontuur/pip/start.mp3' (the audio/ folder is copied into
 // the build). When present, the story screen shows a play button.
-export const STORIES = [PIP, ROBO, BRUNO].map((story) => ({
+//
+// Line breaks (\n) in a text are kept, e.g. for the lines of a verse.
+export const STORIES = [PIP, ROBO, BRUNO, NOOR].map((story) => ({
   ...story,
   nodes: Object.fromEntries(story.nodes.map((node) => [node.id, node])),
 }));

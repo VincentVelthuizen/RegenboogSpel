@@ -48,7 +48,15 @@ export function renderStory(container, story, node, colors, colorsByPicture, { o
   side.className = 'story-side';
   const text = document.createElement('p');
   text.className = 'story-text';
-  text.textContent = fillColorWords(node.text, colorsByPicture, node.picture);
+  const words = fillColorWords(node.text, colorsByPicture, node.picture);
+  if (words.includes('\n')) {
+    // A verse: one block per line, so a long line that wraps stays
+    // recognisable as one line.
+    text.classList.add('verse');
+    words.split('\n').forEach((line) => text.appendChild(span('verse-line', line)));
+  } else {
+    text.textContent = words;
+  }
   side.appendChild(text);
   if (node.audio) side.appendChild(audioButton(node.audio));
 
