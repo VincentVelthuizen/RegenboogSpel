@@ -101,11 +101,15 @@ export function startParcoursActivity(container, picture, onDone, { hero, heroCo
   const [sx, sy] = course.path[0];
   board.appendChild(svgElement('circle', { cx: sx, cy: sy, r: 4.2, fill: '#fff', stroke: '#c9a27a', 'stroke-width': 1 }));
   const [gx, gy] = course.path[course.path.length - 1];
-  const goal = svgElement('g', { transform: `translate(${gx} ${gy})` });
+  // The goal sits in a positioned group; the inner group does the little
+  // "pop" when it is reached, so that animation can't move it out of place.
+  const goalSpot = svgElement('g', { transform: `translate(${gx} ${gy})` });
+  const goal = svgElement('g');
   goal.classList.add('parcours-goal');
   goal.appendChild(svgElement('circle', { cx: 0, cy: 0, r: GOAL_SIZE / 2 + 1, fill: '#fff', opacity: 0.85 }));
   goal.appendChild(pictureAt(picture, GOAL_SIZE));
-  board.appendChild(goal);
+  goalSpot.appendChild(goal);
+  board.appendChild(goalSpot);
 
   const heroEl = svgElement('g');
   heroEl.classList.add('parcours-hero');

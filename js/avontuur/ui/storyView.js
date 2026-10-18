@@ -85,6 +85,19 @@ export function renderStory(container, story, node, colors, colorsByPicture, { o
   side.appendChild(choices);
   view.appendChild(side);
   container.appendChild(view);
+
+  // On a small or short screen (an iPad lying down, with Safari's bars),
+  // shrink the text and buttons step by step until everything fits.
+  const fit = () => {
+    for (let scale = 1; scale >= 0.6; scale -= 0.05) {
+      view.style.setProperty('--fit', scale.toFixed(2));
+      const overflows = view.scrollHeight > view.clientHeight + 1 || side.scrollHeight > side.clientHeight + 1;
+      if (!overflows) break;
+    }
+  };
+  fit();
+  window.addEventListener('resize', fit);
+  return () => window.removeEventListener('resize', fit);
 }
 
 // Title screen: one big card per story.

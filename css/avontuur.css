@@ -8,9 +8,10 @@
 }
 
 #stage {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+  /* Exactly the visible screen. Unlike 100vw/100vh, this follows Safari on
+     iPad when its address and tab bars show or hide. */
+  position: fixed;
+  inset: 0;
   overflow: hidden;
 }
 
@@ -486,7 +487,7 @@
 }
 
 @keyframes goal-pop {
-  50% { scale: 1.2; }
+  50% { transform: scale(1.2); }
 }
 
 /* ---------- Story ---------- */
@@ -512,13 +513,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.2vh;
+  gap: calc(2.2vh * var(--fit, 1));
   max-width: 40em;
   overflow-y: auto;
 }
 
 .story-text {
-  font-size: clamp(1.1rem, 3.3vmin, 1.7rem);
+  font-size: calc(clamp(1.1rem, 3.3vmin, 1.7rem) * var(--fit, 1));
   line-height: 1.45;
   color: #3f3024;
   background: #fff;
@@ -528,7 +529,7 @@
 }
 
 .story-text.verse {
-  font-size: clamp(1rem, 2.9vmin, 1.55rem);
+  font-size: calc(clamp(1rem, 2.9vmin, 1.55rem) * var(--fit, 1));
 }
 
 .verse-line {
@@ -538,7 +539,7 @@
 }
 
 .story-end {
-  font-size: clamp(1.4rem, 5vmin, 2.4rem);
+  font-size: calc(clamp(1.4rem, 5vmin, 2.4rem) * var(--fit, 1));
   font-weight: 700;
   font-style: italic;
   color: #7c3a10;
@@ -558,7 +559,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: clamp(10px, 3vmin, 24px);
+  gap: calc(clamp(10px, 3vmin, 24px) * var(--fit, 1));
 }
 
 .choice-btn {
@@ -566,8 +567,8 @@
   flex-direction: column;
   align-items: center;
   gap: 0.3em;
-  min-width: clamp(110px, 24vmin, 180px);
-  padding: 0.6em 0.8em 0.7em;
+  min-width: calc(clamp(110px, 24vmin, 180px) * var(--fit, 1));
+  padding: calc(0.6em * var(--fit, 1)) 0.8em calc(0.7em * var(--fit, 1));
   background: #fff;
   border: 2px solid #eadcc6;
   border-radius: 18px;
@@ -585,7 +586,7 @@
 }
 
 .choice-emoji {
-  font-size: clamp(2.4rem, 10vmin, 4.4rem);
+  font-size: calc(clamp(2.4rem, 10vmin, 4.4rem) * var(--fit, 1));
   line-height: 1.1;
 }
 
@@ -596,7 +597,7 @@
 }
 
 .choice-label {
-  font-size: clamp(0.95rem, 2.8vmin, 1.3rem);
+  font-size: calc(clamp(0.95rem, 2.8vmin, 1.3rem) * var(--fit, 1));
   font-weight: 600;
 }
 

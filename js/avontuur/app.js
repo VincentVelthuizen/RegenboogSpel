@@ -96,7 +96,7 @@ function render() {
     return;
   }
 
-  renderStory(stage, story, node, state.made[state.step], colorsByPicture(state), {
+  cleanup = renderStory(stage, story, node, state.made[state.step], colorsByPicture(state), {
     onChoose: (next) => { state = choose(state, next); render(); },
     onRestart: () => start(state.storyId),
     onStories: () => { state = createAdventure(); render(); },
