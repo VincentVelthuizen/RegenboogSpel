@@ -249,11 +249,14 @@
     padding: 10vh 3vw 3vh;
   }
 
+  /* Lying down: a fixed 3 × 3 block of colours beside the picture. (A
+     wrapping column grew off the right edge of the screen on iPad.) */
   .activity-color .palette {
-    flex-direction: column;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    align-content: center;
+    gap: clamp(10px, 2.4vmin, 18px);
     padding: 0 0 clamp(64px, 14vmin, 110px);
-    max-height: 100%;
   }
 }
 
